@@ -1,0 +1,6 @@
+/app/settings.php
+/bower_components
+/vendor
+/node_modules
+composer.lock
+package-lock.json

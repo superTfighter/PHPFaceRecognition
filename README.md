@@ -32,7 +32,7 @@ $ screen -S screen_name
 $ gulp
 ```
 Az összes app\Resouces\less -ben található .less fájl lefordul a public\css könyvtárba.
-Fegyelem: A gulp script úgy van megírva, hogy a .less fájlokat figyeli így ha valami változás van benna akkor rögtön fordítja is .css-re
+Figyelem: A gulp script úgy van megírva, hogy a .less fájlokat figyeli, így ha valami változás van benne akkor rögtön fordítja is .css-re (watch funkció)
 
 ## Külső JS és CSS csomagok frissítés saját projekten belűl
 A project gyökerében adjuk ki az alábbi parancsokat
@@ -105,6 +105,8 @@ $ gulp build
   |    | 
   |    +-- index.php                                            // A file. 
   | 
+  +-- vendor                                                    // Külső php-s modulok, függvénytárak, könyvtárak gyűjtőhelye a composer generálja
+  |
   +-- README.md                                                 // Ez a file amit éppen olvasol
   |
   +-- auth.json                                                 // Alfi\core miatti azonosítás
@@ -118,3 +120,7 @@ $ gulp build
   +-- package.json                                              // npm leíró
 ```
 
+# Hasznos dokumentációk
+
+* [Slim Framework](https://www.slimframework.com/)
+* [Twig](https://twig.symfony.com/doc/2.x/)

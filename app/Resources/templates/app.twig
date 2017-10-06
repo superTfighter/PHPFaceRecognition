@@ -17,7 +17,7 @@
 
     <script src="assets/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="/assets/jquery-ui/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="assets/jquery-ui/css/jquery-ui.min.css">
     <script src="assets/jquery-ui/js/jquery-ui.min.js"></script>
   
     <script src="assets/jquery.cookie.js"></script>
@@ -107,7 +107,7 @@
             <section class="sidebar">
                 <ul class="sidebar-menu">
                     <li class="header">Menü</li>
-                    <li {% if current_path matches '/home/' %} class="active" {% endif %}><a href="{{ path_for('home.index') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                    <li {% if current_path matches '/home/' %} class="active" {% endif %}><a href="{{ path_for('home') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
                 </ul>
             </section>
 

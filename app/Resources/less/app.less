@@ -11,52 +11,34 @@
 // LOGO
 
 body {
-	.login-logo {
-        font-family: 'Good Times';
-        font-size: 32px;
-        color: #FFFFFF;
-	}
     .main-header {
         .logo {
-            color: white;
-            font-size: 21px;
-            line-height: normal;
-            > .logo-mini {
-                font-family: 'Good Times';
-                line-height: 50px;
-                font-size: 32px !important;
-            }
             > .logo-lg {
-                text-align: center;
-                overflow: hidden;
-                > div {
-                    margin: 0 auto;
-                    overflow: visible;
-                    text-align: center;
-                    width: 140px;
+                > div:first-child {
                     > div {
-                        text-align: right;
-                        width: auto;
-                        float: left;
-                        position: relative;
-                        // margin-top: 3px;
-                        margin-top: 9px;
-                        &:hover {
-                            color: white;
-                        }
-                        > div:first-child {
-                            font-family: 'Good Times';
-                            font-size: 24px;
-                            line-height: normal;
-                            float: right;
-                            overflow: hidden;
-                        }
-                        > div:last-child {
-                            height: 0;
-                        }
-                    }                    
+                        padding-top: 8px;
+                    }
                 }
             }
         }
     }
-}
+    .login-logo {
+        font-family: 'Good Times';
+        font-size: 32px;
+        color: #FFFFFF;
+    }
+} 
+
+body.skin-alfi-kifu {
+    .main-header {
+        .logo {
+            > .logo-lg {
+                > div:first-child {
+                    > div {
+                        padding-left: 75px;
+                    }
+                }
+            }
+        }
+    }
+} 

@@ -13,6 +13,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet">
+
     <!-- ALFI DEFAUTLS -->
 
     <script src="assets/jquery.min.js"></script>
@@ -48,8 +51,8 @@
     <link rel="stylesheet" href="assets/select2/css/select2.min.css">
     <script src="assets/select2/js/select2.min.js"></script>
 
-    <link rel="stylesheet" href="css/alfi.css">
-    <script src="js/alfi.js"></script>
+    <link rel="stylesheet" href="https://profile.niif.hu/css/alfi.css">
+    <script src="https://profile.niif.hu/js/alfi.js"></script>
 
     <!-- ALFI APPCENTER -->
 
@@ -62,7 +65,7 @@
     {% block page_head %} {% endblock %}
 
 </head>
-<body class="hold-transition {% if skin %} {{ skin }} {% else %}skin-alfi-kifu {% endif %}sidebar-mini {{ sidebar_collapse }}">
+<body class="hold-transition {% if skin %} {{ skin }} {% else %} skin-alfi-kifu skin-alfi-kifu-dark {% endif %}sidebar-mini {{ sidebar_collapse }}">
 
     <div class="wrapper">
 
@@ -107,7 +110,9 @@
             <section class="sidebar">
                 <ul class="sidebar-menu">
                     <li class="header">Menü</li>
+                    <li><a href="/"><i class="fa fa-fw fa-user"></i> <span>Saját adatok</span></a></li>
                     <li {% if current_path matches '/home/' %} class="active" {% endif %}><a href="{{ path_for('home') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+
                 </ul>
             </section>
 

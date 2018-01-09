@@ -3,7 +3,13 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     csso = require('gulp-csso'),
     exec = require('gulp-exec'),
+    util = require('gulp-util'),
+    plumber = require('gulp-plumber');
     install = require('gulp-install');
+
+var onError = function(err) {
+    console.log(err);
+}
 
 gulp.task('build', function(){
 
@@ -47,6 +53,9 @@ gulp.task('build', function(){
 gulp.task('default', function() {
     return watch('app/Resources/less/*.less', function() {
 	gulp.src('app/Resources/less/*.less')
+	    .pipe(plumber({
+		errorHandler: onError
+	    }))
 	    .pipe(less())
 	    .pipe(csso())
 	    .pipe(gulp.dest('public/css'));

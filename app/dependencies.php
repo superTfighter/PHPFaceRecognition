@@ -6,6 +6,20 @@ $container = $app->getContainer();
 // Service providers
 // -----------------------------------------------------------------------------
 
+// logolni minden exceptiont amit amugy csak a slim kezelne le logolas nelkul
+$container['errorHandler'] = function ($c) {
+    return new App\Handlers\Error($c);
+};
+
+// notice, warning, mindent(!) exceptionne
+set_error_handler(function ($severity, $message, $file, $line) {
+    // error squelch operator support, ha ott a @ akkor ignore
+    if ( error_reporting() == 0 )
+      return true;
+
+    throw new \ErrorException($message, 0, $severity, $file, $line);
+});
+
 // Twig
 $container['view'] = function($container) {
 
@@ -86,12 +100,64 @@ $container['predis'] = function ($c) {
 };
 */
 
+// PHPMailer
+$container['mail'] = function ($container) {
+    $settings = $container->get('settings')['mail'];
+
+    // https://github.com/PHPMailer/PHPMailer
+    $mail = new PHPMailer;
+
+    $mail->Host       = $settings['host'];
+    $mail->SMTPAuth   = $settings['auth'];     // I set false for localhost
+    $mail->SMTPSecure = $settings['secure'];   // set blank for localhost
+    $mail->Port       = $settings['port'];     // 25 for local host
+    $mail->Username   = $settings['username']; // I set sender email in my mailer call
+    $mail->Password   = $settings['password'];
+    $mail->CharSet    = 'UTF-8';
+
+    // ne legyen X-Mailer header
+    // (ha ures akkor sajatot hasznal, ha whitespace akkor semmit)
+    $mail->XMailer = ' ';
+
+    $mail->isHTML(true);
+
+    $mail->From       = $settings['fromEmail'];
+    $mail->FromName   = $settings['fromName'];
+
+    if ($settings['errorsToEmail'])
+    {
+        $mail->Sender = $settings['errorsToEmail'];
+        $mail->addCustomHeader('Errors-To', $settings['errorsToEmail'] );
+        $mail->addCustomHeader('Return-Path', $settings['errorsToEmail'] );
+    }
+
+    $mail->SMTPKeepAlive = true;
+    $mail->SMTPAutoTLS = true;
+    /*
+    $mail->SMTPOptions = array(
+      'ssl' => array(
+        'verify_peer'      => false,
+        'verify_peer_name' => false,
+      ),
+    );
+    */
+    return $mail;
+};
+
 // Monolog
 $container['logger'] = function ($container) {
     $settings = $container['settings']['logger'];
     $logger = new \Monolog\Logger($settings['name']);
     $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], \Monolog\Logger::DEBUG));
+
+    $lineFormatter = new \Monolog\Formatter\LineFormatter();
+    $lineFormatter->allowInlineLineBreaks(true);
+    $lineFormatter->ignoreEmptyContextAndExtra(true);
+
+    $handler = new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG);
+    $handler->setFormatter($lineFormatter);
+
+    $logger->pushHandler($handler);
 
     return $logger;
 };

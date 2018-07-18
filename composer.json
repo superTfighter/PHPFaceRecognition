@@ -18,7 +18,8 @@
         "ALFI/core"          : "^1.0",
         "slim/flash"         : "^0.2.0",
         "predis/predis"      : "^1.1",
-        "phpmailer/phpmailer": "^5.2"
+        "phpmailer/phpmailer": "^5.2",
+        "alexgarrett/violin" : "^2.2"
     },
     "repositories": [
         {

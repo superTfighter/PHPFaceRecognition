@@ -17,4 +17,14 @@ class HomeAction
         return $this->view->render($response, 'home/index.twig', ['message' => $message]);
         
     }
+
+    public function indexValidationTest($request, $response)
+    {
+
+    	$message = $this->HomeRepository->getMessage();
+
+        return $this->view->render($response, 'home/index.twig', ['message' => $message]);   
+        
+    }
+
 }

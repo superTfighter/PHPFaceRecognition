@@ -112,6 +112,7 @@
                     <li class="header">Menü</li>
                     <li><a href="/"><i class="fa fa-fw fa-user"></i> <span>Saját adatok</span></a></li>
                     <li {% if current_path matches '/home/' %} class="active" {% endif %}><a href="{{ path_for('home') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                    <li {% if current_path matches '/home/' %} class="active" {% endif %}><a href="{{ path_for('indexValidationTest') }}?test3"><i class="fa fa-home"></i> <span>Home (Validator)</span></a></li>
 
                 </ul>
             </section>

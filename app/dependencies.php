@@ -162,6 +162,11 @@ $container['logger'] = function ($container) {
     return $logger;
 };
 
+// Validator
+$container['Validator'] = function ($c) {
+    return new App\Validation\Validator($c);
+};
+
 // -----------------------------------------------------------------------------
 // Actions - Repositories - Factories
 // -----------------------------------------------------------------------------

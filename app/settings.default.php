@@ -50,7 +50,7 @@ return [
             'errorsToEmail' => '',
             // Error handler ide kuldi a hibakat:
             'logEmails' => [
-                'kukkjanos@niif.hu',
+                'alfi@niif.hu',
             ],
         ],
 

@@ -37,6 +37,23 @@ return [
             'prefix' => 'profile:',
         ],
 
+        // PHPMailer settings
+        'mail' => [
+            'host'      => 'front.iir.niif.hu',
+            'port'      => 25,
+            'secure'    => 'ssl',
+            'auth'      => false,
+            'username'  => '',
+            'password'  => '',
+            'fromName'  => 'skeleton',
+            'fromEmail' => 'skeleton@niif.hu',
+            'errorsToEmail' => '',
+            // Error handler ide kuldi a hibakat:
+            'logEmails' => [
+                'kukkjanos@niif.hu',
+            ],
+        ],
+
         // Monolog settings
         'logger' => [
             'name' => 'app',

@@ -1,4 +1,4 @@
-# Általános tudnivalók
+# Általános tudnivalók V2
 
 ## Függőségek
 * node.js
@@ -39,85 +39,6 @@ A project gyökerében adjuk ki az alábbi parancsokat
 ```
 $ bower update
 $ gulp build
-```
-
-# Project felépítés
-```
- -+-- app
-  |    |
-  |    +-- Actions                                              // Actionök gyűjtőhelye
-  |    |
-  |    +-- Factories                                            // Factoryk gyűjtőhelye
-  |    |
-  |    +-- Globals                                              // Globálisan használt függvények és adatok helye
-  |    |
-  |    +-- Middlewares                                          // Middelwarek gyűjtőhelye
-  |    |
-  |    +-- Repositories                                         // Repositoryk gyűjtőhelye
-  |    |
-  |    +-- Resources                                            // Erőforrások gyűjőhelye (Pl.: nyelvi fájlok, tempate fájlok, adatfájlok)
-  |    |    |
-  |    |    +-- fonts                                           // Egyedi fontok ami nem csomagkezelőből jön
-  |    |    |
-  |    |    +-- less                                            // Projecthez tartozó less fájlok innen fordít a less fordító
-  |    |    |
-  |    |    +-- templates                                       // Twiges templetek könyvtára
-  |    |         |
-  |    |         +-- layouts                                    // A app.twigbe includolt rész layoutok könyvtára 
-  |    |         |    |
-  |    |         |    +-- _control_sidebar.twig                 // Jobb oldalt lévő skinvélasztó templateje
-  |    |         |
-  |    |         +-- home                                       // Az együvé tartozó templatek könyvtárba szedegetve
-  |    |         |    |         
-  |    |         |    +-- index.twig                            // Az adott modul alapértelmezett template fálja
-  |    |         |
-  |    |         +-- app.twig                                   // Alapértelmezett layout fájl minden "őse""
-  |    |
-  |    +-- Traits                                              
-  |    |    |
-  |    |    +-- CoreTrait.php                                   // Constructor és __GET methódus öröklés helyett use-olható
-  |    |
-  |    +-- app.php                                              // Bootstrap
-  |    |
-  |    +-- dependecies.php                                      // Használni kívánt külső könyvtárak illetve belső oszályok pédányosítása, konténerbe helyezése
-  |    |
-  |    +-- middleware.php                                       // Itt regisztrájuk Middlewareket
-  |    |
-  |    +-- routes.php                                           // Routeok
-  |    |
-  |    +-- settings.default.php                                 // Alapértelmezett beállítások, saját beállítokhoz másoljuk le ebbe a könyvtárba settings.php néven
-  |
-  +-- cache                                                     // Cachek  helye
-  |    |
-  |    +-- twig
-  |
-  +-- public                                                    // Publikus webroot
-  |    | 
-  |    +-- assets                                               // Külső könyvátak gyűjőhelye (JS,CSS)
-  |    | 
-  |    +-- css                                                  // Saját CSS fájok valamint ide furdulnak a less fájlok
-  |    | 
-  |    +-- images                                               // Képek, iconok helye
-  |    | 
-  |    +-- js                                                   // Saját JS fájlok helye
-  |    | 
-  |    +-- .htaccess                                            // Sokások htaccess a routok, rewrite és létező fájlok miatt
-  |    | 
-  |    +-- index.php                                            // A file. 
-  | 
-  +-- vendor                                                    // Külső php-s modulok, függvénytárak, könyvtárak gyűjtőhelye a composer generálja
-  |
-  +-- README.md                                                 // Ez a file amit éppen olvasol
-  |
-  +-- auth.json                                                 // Alfi\core miatti azonosítás
-  |
-  +-- bower.json                                                // Bower leíró
-  |
-  +-- composer.json                                             // Composer leíró
-  |
-  +-- gulpfile.js                                               // Gulp leíró
-  |
-  +-- package.json                                              // npm leíró
 ```
 
 # Hasznos dokumentációk

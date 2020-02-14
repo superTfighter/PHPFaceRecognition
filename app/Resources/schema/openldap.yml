@@ -1,0 +1,216 @@
+objects:
+    user:
+        # This is a LdapTools specific to refer to this object type overall.
+        type: user
+        # The LDAP objectClass
+        class: inetOrgPerson
+        converter_options:
+            group_membership:
+                groups:
+                    to_attribute: uniqueMember
+                    from_attribute: memberOf
+                    attribute: cn
+                    filter:
+                        objectClass: groupOfUniqueNames
+        # These are converters to be applied for going both to and from LDAP.
+        converters:
+             generalized_time:
+                 - 'created'
+                 - 'modified'
+             group_membership:
+                 - 'groups'
+        # This is the actual mapping of attribute names to what they really are in LDAP.
+        attributes:
+            cellPhone: mobile
+            city: l
+            company: company
+            country: c
+            created: createTimestamp
+            department: department
+            departmentNumber: departmentNumber
+            description: description
+            displayName: displayName
+            dn: dn
+            dc: dc
+            cn: cn
+            emailAddress: email
+            employeeNumber: employeeNumber
+            fax: fax
+            firstName: givenName
+            groups: memberOf
+            homeDirectory: homeDirectory
+            homePhone: homePhone
+            initials: initials
+            ipPhone: ipPhone
+            lastName: sn
+            modified: modifyTimestamp
+            name: uid
+            cnUnaccent: cn;unaccent
+            cnLangEn: cn;lang-en
+            pager: pager
+            password: password
+            userPassword: userPassword
+            phoneNumber: telephoneNumber
+            extension: telephoneNumber
+            poBox: postOfficeBox
+            state: st
+            streetAddress: streetAddress
+            title: title
+            username: uid
+            zipCode: postalCode
+            eduPersonAffiliation: eduPersonAffiliation
+            eduPersonNickname: eduPersonNickname
+            mail: mail
+            mailHost: mailHost
+            manager: manager
+            jpegPhoto: jpegPhoto
+            sshPublicKey: sshPublicKey
+            roomNumber: roomNumber
+            internationaliSDNNumber: internationaliSDNNumber
+            inetSubscriberStatus: inetSubscriberStatus
+            rfc822MailAlias: rfc822MailAlias
+            mailForwardingAddress: mailForwardingAddress
+        attributes_to_select:
+            - 'firstName' # duplicate
+            - 'lastName' # duplicate
+            - 'emailAddress'
+            - 'mail'
+            - 'mailHost'
+            - 'username' # duplicate
+            - 'title'
+            - 'extension'
+            - 'name' # duplicate
+            - 'homePhone'
+            - 'groups'
+            - 'fax'
+            - 'employeeNumber'
+            - 'cellPhone'
+            - 'dn'
+            - 'dc'
+            - 'cn'
+            - 'cnUnaccent'
+            - 'cnLangEn'
+            - 'eduPersonAffiliation'
+            - 'eduPersonNickname'
+            - 'manager'
+            - 'roomNumber'
+            - 'internationaliSDNNumber'
+            - 'sshPublicKey'
+            - 'jpegPhoto'
+            - 'mailQuota'
+            - 'inetSubscriberStatus'
+            - 'rfc822MailAlias'
+            - 'mailForwardingAddress'
+            - 'objectclass'
+        multivalued_attributes:
+            - 'groups'
+    group:
+        type: group
+        class: groupOfUniqueNames
+        converters:
+             generalized_time:
+                 - 'created'
+                 - 'modified'
+        attributes:
+            created: createTimestamp
+            description: description
+            name: cn
+            mail: mail
+            mailHost: mailHost
+            rfc822MailMember: rfc822MailMember
+            modified: modifyTimestamp
+            members: uniqueMember
+            member: member
+        multivalued_attributes:
+            - members
+        default_values:
+            objectclass: [ 'groupOfNames', 'inetMailGroup', 'inetMailRouting' ]
+        attributes_to_select:
+            - 'name'
+            - 'rfc822MailMember'
+            - 'mail'
+            - 'mailHost'
+            - 'member'
+            - 'description'
+            - 'created'
+    inetMailGroup:
+        type: inetMailGroup
+        class: inetMailGroup
+        converters:
+             generalized_time:
+                 - 'created'
+                 - 'modified'
+        attributes:
+            created: createTimestamp
+            description: description
+            cn: cn
+            mail: mail
+            mailHost: mailHost
+            rfc822MailMember: rfc822MailMember
+            modified: modifyTimestamp
+            members: uniqueMember
+            member: member
+        multivalued_attributes:
+            - members
+        default_values:
+            objectclass: [ 'groupOfNames', 'inetMailGroup', 'inetMailRouting' ]
+        attributes_to_select:
+            - 'cn'
+            - 'rfc822MailMember'
+            - 'mail'
+            - 'mailHost'
+            - 'member'
+            - 'description'
+            - 'created'
+    ou:
+        type: ou
+        class: organizationalUnit
+        converters:
+             generalized_time:
+                 - 'created'
+                 - 'modified'
+        attributes:
+            created: createTimestamp
+            dn: dn
+            modified: modifyTimestamp
+            name: ou
+        attributes_to_select:
+            - 'name'
+            - 'dc'
+            - 'uid'
+        default_values:
+            objectclass: [ 'top', 'organizationalUnit', 'domain' ]
+        required_attributes:
+            - 'name'
+            - 'dc'
+            - 'uid'
+    domain:
+        type: domain
+        class: domain
+        converters:
+             generalized_time:
+                 - 'created'
+                 - 'modified'
+        attributes:
+            created: createTimestamp
+            dc: dc
+            dn: dn
+            destinationIndicator: destinationIndicator
+            inetAuthorizedServices: inetAuthorizedServices
+            uid: uid
+            modified: modifyTimestamp
+            name: uid
+        attributes_to_select:
+            - 'name'
+            - 'dc'
+            - 'uid'
+            - 'destinationIndicator'
+            - 'inetAuthorizedServices'
+            - 'dn'
+        default_values:
+            objectclass: [ 'top', 'domain' ]
+        required_attributes:
+            - 'name'
+            #- 'dc'
+            - 'uid'
+            #- 'dn'

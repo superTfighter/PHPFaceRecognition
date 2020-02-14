@@ -1,0 +1,37 @@
+{% extends 'app_simple.twig' %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="css/user_data_modal.css">
+
+{% endblock %}
+
+{% block page_content %}
+
+	<div>
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="icon-box">
+						<i class="fa fa-check" aria-hidden="true"></i>
+					</div>
+					<h4 class="modal-title">Sikeres bejelentkezés!</h4>
+				</div>
+				<div class="modal-body">
+					<p class="text-center">Folytatással hozzá járulsz az alábbi adatok kezeléséhez:</p>
+					<ul>
+						<li>Név({{ user.nev}})</li>
+						<li>Születési dátum</li>
+						<li>Email cím</li>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<a href="{{ path_for('register') }}" class="btn btn-success btn-block">Folytatás</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+

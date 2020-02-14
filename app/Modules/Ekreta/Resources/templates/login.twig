@@ -1,0 +1,85 @@
+{% extends 'app_simple.twig' %}
+
+
+{% block stylesheets %}
+	<!-- Select2 -->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block script_include %}
+	<!-- Select2 -->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+{% endblock %}
+
+{% block page_content %}
+
+	<div class="login-box">
+		<div class="login-logo">
+			Kréta
+		</div>
+		<!-- /.login-logo -->
+		<div class="login-box-body">
+
+			<form method="POST" action="{{ path_for('loginPost') }}">
+
+
+				<div class="form-group">
+				<!--	<label>Iskola kiválasztás</label>
+					<select class="form-control select2" style="width: 100%;">
+						<option selected="selected">Alabama</option>
+						<option>Alaska</option>
+						<option>California</option>
+						<option>Delaware</option>
+						<option>Tennessee</option>
+						<option>Texas</option>
+						<option>Washington</option>
+					</select>
+				</div>-->
+
+				<div class="form-group">
+					<div class="input-group has-feedback">
+						<input type="text" name="username" class="form-control" placeholder="Felhasználónév" required>
+						<div class="input-group-addon">
+							<i class="fa fa-fw fa-user"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group has-feedback">
+						<input type="password" name="password" class="form-control" placeholder="Jelszó">
+						<div class="input-group-addon">
+							<i class="fa fa-fw fa-lock"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-7">
+					
+					<a href="{{ path_for('implicit') }}" class="btn btn-primary btn-block btn-flat">Bejelentkezés krétán</a>
+					</div>
+					<div class="col-xs-5">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Bejelentkezés</button>
+					</div>
+					<!-- /.col -->
+				</div>
+
+			</form>
+
+		</div>
+		<!-- /.login-box-body -->
+	</div>
+	<!-- /.login-box -->
+{% endblock %}
+
+{% block script %}
+
+	<script>
+
+		$('.select2').select2();
+
+        
+	</script>
+
+{% endblock %}

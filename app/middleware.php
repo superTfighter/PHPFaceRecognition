@@ -7,7 +7,3 @@ $app->add(new \Slim\Middleware\Session([
   'autorefresh' => true,
   'lifetime'    => '3 hour'
 ]));
-
-
-// SAML Auth
-$app->add(new \App\Modules\IIR\Middlewares\AuthMiddleware($app->getContainer()));

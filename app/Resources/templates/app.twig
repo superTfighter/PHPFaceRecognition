@@ -79,7 +79,7 @@
 
         <header class="main-header">
 
-            <a href="#" class="logo">
+            <a href="{{ path_for('home') }}" class="logo">
                 <span class="logo-mini">
                     <div><i class="fa fa-skull"></i></div>
                 </span>
@@ -118,8 +118,7 @@
             <section class="sidebar">
                 <ul class="sidebar-menu">
                     <li class="header">Menü</li>
-                    <li class="{{ is_active_path() }}"><a href="{{ path_for('iir')}}"><i class="fas fa-fw fa-home"></i> <span>Főoldal</span></a></li>
-                    <li class="{{ is_active_path() }}"><a href="{{ path_for('iir_test')}}"><i class="fas fa-fw fa-home"></i> <span>Test</span></a></li>
+                    <li class="{{ is_active_path() }}"><a href="{{ path_for('home') }}"><i class="fas fa-fw fa-home"></i> <span>HelloWorld</span></a></li>
                     {# <li class="{{ is_active_path('helloworld') }}"><a href="{{ path_for('helloworld_index') }}"><i class="fas fa-paw"></i> <span>HelloWorld</span></a></li> #}
                 </ul>
             </section>

@@ -43,22 +43,26 @@ class EkretaAction
     public function userData($request, $response, $args)
     {
         $userData = $this->{'@Ekreta\EkretaRepository'}->getUserData();
-
         return $this->view->render($response, '@Ekreta/userData.twig', ['user' => $userData]);
     }
 
     public function register($request, $response, $args)
     {
-        $UserData = $this->{'@Ekreta\EkretaRepository'}->getUserData();
-        $nameSplit = explode(' ', $UserData['nev']);
+        $userData = $this->{'@Ekreta\EkretaRepository'}->getUserData();
+        var_dump($userData);
+        $nameSplit = explode(' ', $userData['nev']);
         $generatedName = substr($nameSplit[0], 0, 3) . substr($nameSplit[1], 0, 3);
-
+       
         return $this->view->render($response, '@Ekreta/register.twig', ['name' => $generatedName]);
     }
 
     public function registerPost($request, $response, $args)
     {
-        print_r('Sikeres regisztráció!');
+        $data = $request->getParsedBody();
+
+        $this->{'@IIR\LdapFactory'}->createUserInLdap($data);
+
+        //TODO:
     }
 
     // Implicit flow implementation
@@ -68,9 +72,10 @@ class EkretaAction
 
         $redirectUri = urlencode('https://dev.alfi.niif.hu' . $this->router->pathFor('implicitGet'));
 
-        $idpUrl = $idpUrl . '/connect/authorize?client_id=kifu-eduroam&redirect_uri=' . $redirectUri . '&response_type=id_token token&scope=kreta-core-webapi.public openid&nonce=jal1ZnCzahth8r9D5Dua0wTQGqdN1QRNC7x6yu7g';
+        //$idpUrl = $idpUrl . '/connect/authorize?client_id=kifu-eduroam&redirect_uri=' . $redirectUri . '&response_type=id_token token&scope=kreta-core-webapi.public openid&nonce=jal1ZnCzahth8r9D5Dua0wTQGqdN1QRNC7x6yu7g';
 
-
+        $idpUrl = $idpUrl . '/connect/authorize?' . 'response_type=id_token ' . 'token&client_id=kifu-eduroam' . '&redirect_uri=' . $redirectUri . '&response_type=id_token ' . 'token&scope=kreta-core-webapi.public ' . 'openid&nonce=jal1ZnCzahth8r9D5Dua0wTQGqdN1QRNC7x6yu7g';
+        //print($idpUrl);die();
         return $response->withRedirect($idpUrl);
     }
 

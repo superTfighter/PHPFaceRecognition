@@ -1,7 +1,5 @@
 <?php
 
-use LdapTools;
-
 
 // -----------------------------------------------------------------------------
 // Actions - Repositories - Factories
@@ -14,7 +12,6 @@ $container['@IIR\IIRAction'] = function($container) {
 $container['@IIR\LdapAction'] = function($container) {
     return new \App\Modules\IIR\Actions\LdapAction($container);
 };
-
 
 
 $container['@IIR\LdapRepository'] = function($container) {

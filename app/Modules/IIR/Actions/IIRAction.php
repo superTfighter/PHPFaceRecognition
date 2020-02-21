@@ -13,7 +13,13 @@ class IIRAction
 
     public function test($request, $response, $args)
     {
-        var_dump($this->{'@IIR\LdapRepository'}->getAllDomains());die();
+        $iir = $this->{'@IIR\IIRRepository'}->getInstituteByOMandKir('035247','001');
+        
+        var_dump($iir);
+
+        var_dump($this->{'@IIR\LdapRepository'}->getDomain($iir['vpid']));
+
+        die();
     }
 
     public function index($request, $response, $args)

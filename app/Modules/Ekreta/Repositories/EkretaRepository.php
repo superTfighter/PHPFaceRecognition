@@ -3,6 +3,7 @@
 namespace App\Modules\Ekreta\Repositories;
 
 use App\Traits\CoreTrait;
+use Exception;
 
 class EkretaRepository
 {
@@ -53,16 +54,38 @@ class EkretaRepository
             'method' => 'GET',
             'headers' => [
                 'Authorization' => 'Bearer ' . $token
-            ]
+            ],
+
         ];
 
         $resp = $this->api->kreta->call('/felhasznalo', $options);
+
+
+        if (!empty($resp['data']) && $resp['code'] = 200)
+            return $resp['data'];
+        else
+            var_dump($resp);
+            throw new Exception("User data cannot be obtained!",$resp['code']);
+    }
+
+    public function getInstituteData($institute_code)
+    {
+        $token = $this->session->token['access_token'];
+
+        $options = [
+            'method' => 'GET',
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ];
+
+        $resp = $this->api->kreta->call('/intezmeny',$options);
 
         if (!empty($resp['data']))
             return $resp['data'];
         else
             var_dump($resp);
-        
+
     }
 
     public function setToken($token)
@@ -106,9 +129,10 @@ class EkretaRepository
                     }
 
                     return true;
+                } else {
+                    var_dump($resp);die();
+                    return false;
                 }
-            } else {
-                return false;
             }
         }
     }

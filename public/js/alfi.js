@@ -14,50 +14,59 @@ function app_load_init() {
 
     // Init
 
-    $('a.ajax-modal, input.ajax-modal, button.ajax-modal').unbind('click');
-    $('a.ajax-modal, input.ajax-modal, button.ajax-modal').bind('click', function() {
-        $('div.modal div.modal-dialog div.modal-content > div.modal-footer').css('display', 'none');
-        $('div.modal div.modal-dialog div.modal-content > div.modal-header').css('display', 'none');
+    $('.ajax-modal').unbind('click');
+    $('.ajax-modal').bind('click', function() {
+
+        let modal = '.modal .modal-dialog .modal-content > ';
+        $(modal +'.modal-footer').hide();
+
+        // Set the modal's width if the button's data-modal-width attribute exists
         if ($(this).data('modal-width')) {
-            $('div.modal div.modal-dialog').css( 'width', $(this).data('modal-width')+'px' );
-        }
-        else if ($(this).data('width')) {
-            $('div.modal div.modal-dialog').css( 'width', $(this).data('width')+'px' );
-        }
-        else {
-            $('div.modal div.modal-dialog').css( 'width', '' );
+            $('div.modal .modal-dialog').css({
+                'width': $(this).data('modal-width') +'px'
+            });
         }
 
-        if ($(this).data('modal-title')) {
-            $('div.modal div.modal-dialog div.modal-content > div.modal-header h4').html( $(this).data('modal-title') );
-            $('div.modal div.modal-dialog div.modal-content > div.modal-header').css('display', 'block');
-        }
+        // Set the modal's title as the button's data-modal-title or it's text
+        $(modal +'.modal-header .modal-title').html( $(this).data('modal-title') || $(this).text() );
     	
         $('div.modal').modal('show');
         
     	if ($(this).attr('href') && $(this).attr('href') != '#') {
-            $('div.modal div.modal-dialog div.modal-content > div.modal-body').html( "<div class='loader'><i class='fa fa-spin fa-spinner'></i></div>" );
+            $(modal +'.modal-body').html( "<div class='loader'><i class='fa fa-spin fa-spinner'></i></div>" );
             $.ajax({
                 url: $(this).attr('href')
             }).done( function(data) {
-                $('div.modal div.modal-dialog div.modal-content > div.modal-body').html( data );
-                if ( $('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-body').text() || $('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-title').text() ) {
-                    if ($('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-footer').text()) {
-                        $('div.modal div.modal-dialog div.modal-content > div.modal-header h4.modal-title').html( $('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-title').html() );
-                        $('div.modal div.modal-dialog div.modal-content > div.modal-header').css('display', 'block');
+
+                // JSON válasz érkezett a modal-hoz
+                if (typeof data === 'object') {
+                    $(modal +'.modal-header .modal-title').html(data['modal-title']);
+                    $(modal +'.modal-body')               .html(data['modal-body']);
+                    if (data['modal-footer']) {
+                        $(modal +'.modal-footer')         .html(data['modal-footer']);
+                        $(modal +'.modal-footer').css('display', 'block');
                     }
-                    if ($('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-footer').text()) {
-                        $('div.modal div.modal-dialog div.modal-content > div.modal-footer').html( $('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-footer').html() );
-                        $('div.modal div.modal-dialog div.modal-content > div.modal-footer').css('display', 'block');
-                    }
-                    $('div.modal div.modal-dialog div.modal-content > div.modal-body').html( $('div.modal div.modal-dialog div.modal-content > div.modal-body div.modal-body').html() );
-                };
+                }
+                else {
+                    $(modal +'.modal-body').html( data );
+                    if ( $(modal +'.modal-body .modal-body').text() || $(modal +'.modal-body .modal-title').text() ) {
+                        if ($(modal +'.modal-body .modal-header').text()) {
+                            $(modal +'.modal-header .modal-title').html( $(modal +'.modal-body .modal-title').html() );
+                            $(modal +'.modal-header').css('display', 'block');
+                        }
+                        if ($(modal +'.modal-body .modal-footer').text()) {
+                            $(modal +'.modal-footer').html( $(modal +'.modal-body .modal-footer').html() );
+                            $(modal +'.modal-footer').css('display', 'block');
+                        }
+                        $(modal +'.modal-body').html( $(modal +'.modal-body .modal-body').html() );
+                    };
+                }
             }).fail( function() {
-                $('div.modal div.modal-dialog div.modal-content > div.modal-body').html( "<span class='text-danger'>Hiba! :(</span>" );
+                $(modal +'.modal-body').html( "<span class='text-danger'>Hiba! :(</span>" );
             })
         }
         else {
-            $('div.modal div.modal-dialog div.modal-content > div.modal-body').html( "<span class='text-danger'>No href! :(</span>" );
+            $(modal +'.modal-body').html( "<span class='text-danger'>No href! :(</span>" );
         }
 
 	    return false;
@@ -86,13 +95,6 @@ function app_load_init() {
     $('a.close', 'div.modal').unbind();
     $('a.close', 'div.modal').on('click', function () {
 		$('div.modal').modal('hide');
-		$('div.modal').removeClass('modal-fullscreen');
-	});
-
-    $('a.fullscreen', 'div.modal').unbind();
-	$('a.fullscreen', 'div.modal').bind('click', function () {
-        $('div.modal').toggleClass('modal-fullscreen');
-        $('div.modal .modal-dialog .modal-content .modal-header a.fullscreen i').toggleClass('fa-rotate-180');
 	});
 
     // ========

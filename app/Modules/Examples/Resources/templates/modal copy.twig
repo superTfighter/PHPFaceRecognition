@@ -1,0 +1,86 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Examples</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+<script>
+    console.log('Head test!');
+</script>
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">Modal</h3>
+        </div>
+        <div class="card-body">
+
+            <a href="#" class="ajax-modal btn btn-primary">Modal open</a>
+            <a href="{{ path_for('helloworld_modal_test1') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal open 1</a>
+            <a href="{{ path_for('helloworld_modal_test2') }}" data-modal-title="Test 2" class="ajax-modal btn btn-primary">Ajax modal open 2</a>
+
+            <a href="{{ path_for('helloworld_modal_test1') }}" class="ajax-url btn btn-primary">Ajax URL</a>
+
+            <form class="ajax-form" method="POST" action="{{ path_for('helloworld_form_test1') }}" data-submit-fn="form_submit" data-ajax-success-fn="form_ajax_success" data-ajax-fail-fn="form_ajax_fail">
+                <div class="form-group">
+                    <label>Input 1</label>
+                    <input class="form-control" type="text" name="input1">
+                </div>
+                <div class="form-group">
+                    <label>Input 2</label>
+                    <input class="form-control" type="text" name="input2">
+                </div>
+                <div class="form-group">
+                    <label>Input 3</label>
+                    <input class="form-control" type="text" name="input3">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="POST">
+                </div>
+            </form>
+
+        </div>
+        <div class="card-footer">
+            Footer
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+function form_submit() {
+    console.log('form submit function');
+}
+
+function form_ajax_success(header, data) {
+    console.log("SUCCESS");
+    console.log(header);
+    console.log(data);
+}
+
+function form_ajax_fail(header, data) {
+    console.log("FAIL");
+    console.log(header);
+    console.log(data);
+}
+
+$(function () {
+    $('a.modal-ajax, input.modal-ajax').on('click', function() {
+        $('.modal').modal('show');
+        return false;
+    })
+})    
+</script>
+
+{% endblock %}

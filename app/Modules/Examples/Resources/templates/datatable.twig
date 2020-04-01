@@ -1,0 +1,237 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Examples</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/javascript.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">Datatable</h3>
+        </div>
+        <div class="card-body">
+
+            <h4>Datatable example</h4>
+            <table id="datatable-1" class="table display table-bordered table-striped table-condensed table-hover" style="width: 100%;"></table>
+            <br><br>
+
+            <h4>HTML</h4>
+            <textarea id="example1" readonly><table id="datatable-1" class="table display table-bordered table-striped table-condensed table-hover" style="width: 100%;"></table></textarea>
+            <br>
+
+            <h4>Ajánlott JS</h4>
+            Ezek azok a DT beállítások, amiket ajánlott elvégezni az inicializáláshoz.<br>
+            Az adatokat célszerű szerver oldalon generálni, nagy adatmennyiségeknél pedig elengedhetetlen.<br>
+            Ez a dom egy kiforrott, jól mutató változat, csak indokolt esetekben érdemes eltérni ettől.
+            <textarea id="example2" readonly>$('#datatable-1').DataTable({
+    'processing': true,
+    'serverSide': true,
+    'dom'       : '<"float-left"B><"float-right"f>rt<"row"<"col-sm-6"l><"col-sm-6"p>>',
+    'language'  : { 'url': 'assets/datatables/Hungarian.json' },
+    'ajax'      : {
+        "type"       : "GET",
+        "url"        : '{% verbatim %}{{ path_for('examples_datatable_json') }}{% endverbatim %}',
+        "data"       : function (data) {
+            // Ez a kereséshez rakja össze a szükséges bemeneti mezőket
+            return {
+                search            : data.search.value,
+                start             : data.start,
+                length            : data.length,
+                order_by_column   : data.columns[ data.order[0].column ].data,
+                order_by_direction: data.order[0].dir,
+            };
+        }
+    },
+    "lengthMenu": [ [30, 100, -1], [30, 100, "Összes"] ],
+    'pageLength': 30,
+    'columns'   : [
+        {'data': 'id',                  'title': '#'},
+        {'data': 'ticket_id',           'title': 'Hibajegy száma'},
+    ]
+});</textarea>
+            <br><br>
+
+            <h4>A fenti táblázatot működtető JS</h4>
+            <textarea id="example3" readonly>let datatable1 = $('#datatable-1').DataTable({
+    'processing': true,
+    'serverSide': true,
+    'dom'       : '<"float-left"B><"float-right"f>rt<"row"<"col-sm-6"l><"col-sm-6"p>>',
+    'language'  : { 'url': 'assets/datatables/Hungarian.json' },
+    'ajax'      : {
+        "type"       : "GET",
+        "url"        : '{% verbatim %}{{ path_for('examples_datatable_json') }}{% endverbatim %}',
+        "data"       : function (data) {
+
+            return {
+                search            : data.search.value,
+                start             : data.start,
+                length            : data.length,
+                order_by_column   : data.columns[ data.order[0].column ].data,
+                order_by_direction: data.order[0].dir,
+            };
+        }
+    },
+    "order": [[ 2, "desc" ]],
+    "lengthMenu": [ [30, 100, -1], [30, 100, "Összes"] ],
+    'pageLength': 30,
+    'columns'   : [
+        {'defaultContent': '-', 'data': 'id',                  'title': '#',                'className': 'min-w'},
+        {'defaultContent': '-', 'data': 'ticket_id',           'title': 'Hibajegy száma'},
+        {'defaultContent': '-', 'data': 'location',            'title': 'Helyszín',         'className': 'min-w',     'orderable': false},
+        {'defaultContent': '-', 'data': 'source',              'title': 'Érintett',         'className': 'min-w',     'orderable': false},
+        {'defaultContent': '-', 'data': 'device',              'title': 'Eszköz',           'className': 'd-none d-xl-table-cell', 'orderable': false},
+        {'defaultContent': '-', 'data': 'description',         'title': 'Esemény leírása',  'className': 'd-none d-xl-table-cell', 'orderable': false},
+        {'defaultContent': '-', 'data': 'start',               'title': 'Esemény kezdete',  'className': 'min-w'},
+        {'defaultContent': '-', 'data': 'end',                 'title': 'Esemény vége',     'className': 'min-w'},
+        {
+            'orderable': false,
+            'className': 'min-w text-right',
+            'title'    : '&nbsp;',
+            'width'    : '52px',
+            render     : function (data, type, row, meta) {
+                let elementID   = row.id;
+                let content = '';
+                    content += `
+                        <a
+                            style="
+                                width: 24px;
+                                text-align: center !important;
+                            "
+                            class="
+                                btn
+                                btn-primary
+                                btn-xs
+                            "
+                            href="{{ path_for('examples_datatable') }}?${elementID}"
+                            >
+                                <i class="fa-fw fas fa-pencil-alt"></i>
+                    </a>`;
+                return content;
+            }
+        },
+    ]
+});</textarea>
+            
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1'), {
+    lineNumbers: true,
+    mode       : "xml",
+    readOnly   : "nocursor",
+    height     : "auto"
+});
+CodeMirror.fromTextArea( document.getElementById('example2'), {
+    lineNumbers: true,
+    readOnly   : "nocursor",
+    height     : "auto",
+    mode       : "javascript",
+});
+CodeMirror.fromTextArea( document.getElementById('example3'), {
+    lineNumbers: true,
+    readOnly   : "nocursor",
+    height     : "auto",
+    mode       : "javascript",
+});
+
+let datatable1 = $('#datatable-1').DataTable({
+    'processing': true,
+    'serverSide': true,
+    'dom'       : '<"float-left"B><"float-right"f>rt<"row"<"col-sm-6"l><"col-sm-6"p>>',
+    'language'  : { 'url': 'assets/datatables/Hungarian.json' },
+    'ajax'      : {
+        "type"       : "GET",
+        "url"        : '{{ path_for('examples_datatable_json') }}',
+        "data"       : function (data) {
+
+            return {
+                search            : data.search.value,
+                start             : data.start,
+                length            : data.length,
+                order_by_column   : data.columns[ data.order[0].column ].data,
+                order_by_direction: data.order[0].dir,
+            };
+        }
+    },
+    "order": [[ 2, "desc" ]],
+    "lengthMenu": [ [30, 100, -1], [30, 100, "Összes"] ],
+    'pageLength': 30,
+    'columns'   : [
+        {'defaultContent': '-', 'data': 'id',                  'title': '#',                'className': 'min-w'},
+        {'defaultContent': '-', 'data': 'ticket_id',           'title': 'Hibajegy száma'},
+        {'defaultContent': '-', 'data': 'location',            'title': 'Helyszín',         'className': 'min-w',     'orderable': false},
+        {'defaultContent': '-', 'data': 'source',              'title': 'Érintett',         'className': 'min-w',     'orderable': false},
+        {'defaultContent': '-', 'data': 'device',              'title': 'Eszköz',           'className': 'd-none d-xl-table-cell', 'orderable': false},
+        {'defaultContent': '-', 'data': 'description',         'title': 'Esemény leírása',  'className': 'd-none d-xl-table-cell', 'orderable': false},
+        {'defaultContent': '-', 'data': 'start',               'title': 'Esemény kezdete',  'className': 'min-w'},
+        {'defaultContent': '-', 'data': 'end',                 'title': 'Esemény vége',     'className': 'min-w'},
+        {
+            'orderable': false,
+            'className': 'min-w text-right',
+            'title'    : '&nbsp;',
+            'width'    : '52px',
+            render     : function (data, type, row, meta) {
+                let elementID   = row.id;
+                let content = '';
+                    content += `
+                        <a
+                            style="
+                                width: 24px;
+                                text-align: center !important;
+                            "
+                            class="
+                                btn
+                                btn-primary
+                                btn-xs
+                            "
+                            href="{{ path_for('examples_datatable', {'elID': '${elementID}'}) }}"
+                            >
+                                <i class="fa-fw fas fa-pencil-alt"></i>
+                    </a>`;
+                return content;
+            }
+        },
+    ]
+});
+
+</script>
+
+{% endblock %}

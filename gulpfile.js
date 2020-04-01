@@ -49,9 +49,7 @@ gulp.task('build', function(){
 
 });
 
-
-gulp.task('default', function() {
-    return watch('app/Resources/less/*.less', function() {
+gulp.task('css', function(){
 	gulp.src('app/Resources/less/*.less')
 	    .pipe(plumber({
 		errorHandler: onError
@@ -59,5 +57,9 @@ gulp.task('default', function() {
 	    .pipe(less())
 	    .pipe(csso())
 	    .pipe(gulp.dest('public/css'));
-    })
+
+});
+
+gulp.task('default', function() {
+    return watch('app/Resources/less/*.less', 'css')
 });

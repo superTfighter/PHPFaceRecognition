@@ -17,6 +17,7 @@ class TwigExtensions extends \Twig_Extension
             new \Twig_SimpleFilter('userbyuid', [$this, 'userbyuid']),
             new \Twig_SimpleFilter('userbyid', [$this, 'userbyid']),
             new \Twig_SimpleFilter('secondsToTime', [$this, 'secondsToTime']),
+            new \Twig_SimpleFilter('highlight', [$this, 'highlight']),
         ];
     }
 
@@ -25,7 +26,25 @@ class TwigExtensions extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('set_element', [$this, 'set_element']),
             new \Twig_SimpleFunction('is_active_path', [$this, 'is_active_path']),
+            new \Twig_SimpleFunction('get_current_path', [$this, 'get_current_path']),
+            new \Twig_SimpleFunction('cache', [$this, 'cache']),
+            // Lovi's custom functions
+            new \Twig_SimpleFunction('mtime', [$this, 'mtime']),
         ];
+    }
+
+    // Higlight search term
+    public function highlight($string, $term) {
+        $term = explode(' ', $term);
+        $term = array_map('trim', $term);
+        $term = array_filter($term);
+
+        return preg_replace('/'. implode('|', $term) .'/i', '<span class="highlight">\\0</span>', $string);
+    }
+
+    public function cache($name)
+    {
+        return $this->cache->get($name, 'data');
     }
 
     public function is_active_path($string = '')
@@ -39,11 +58,22 @@ class TwigExtensions extends \Twig_Extension
             return 'active';
         }
         elseif ($string) {
-            return preg_match('/^'.$string.'/', $uri_tail)?'active':'';
+            $pattern = '/^'. preg_quote($string, '/') .'/';
+            return preg_match($pattern, $uri_tail)?'active':'';
         }
         else {
             return '';
         }       
+    }
+
+    public function get_current_path()
+    {
+        $uri    = $this->container['request']->getUri();
+        $router = $this->container['router'];
+
+        $uri_tail = explode( $uri->getBaseUrl().'/', $uri, 2 )[1];
+
+        return $uri_tail;
     }
 
     public function getRangeDateString($timestamp, $dayago = 5)
@@ -192,6 +222,18 @@ class TwigExtensions extends \Twig_Extension
     public function userbyid ($id)
     {
         return $this->user->getUserByID($id);
+    }
+
+
+    // Lovi's custom functions
+
+    // This method usually used to prevent file caching, by attaching the file modify time as past of the url, like: xy.css?123456789
+    public function mtime ($file)
+    {
+        if (file_exists($file))
+            return filemtime($file);
+
+        return 0;
     }
 
 }

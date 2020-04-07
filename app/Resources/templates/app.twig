@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Skeleton v2</title>
@@ -37,7 +36,7 @@
     <link rel="stylesheet" href="assets/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link rel="stylesheet" href="assets/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="assets/summernote/summernote-bs4.css">
-
+    
     <!-- ALFI assets -->
     <link rel="stylesheet" href="css/alfi.css?{{ mtime('css/app.css') }}">
     <link rel="stylesheet" href="css/app.css?{{ mtime('css/app.css') }}">
@@ -49,7 +48,7 @@
     {% block head %} {% endblock %}
 
 </head>
-<body class="{% if institute.id %}institute-page{% endif %} hold-transition navbar-dark sidebar-mini {{ cookie['sidebar_collapse'] }}">
+<body class="hold-transition navbar-dark sidebar-mini {{ cookie['sidebar_collapse'] }}">
 
     <div class="wrapper">
 
@@ -64,23 +63,13 @@
                 </li>
             </ul>
 
-            {% if institute.id %}
-                {% include '_institute.twig' %}
-            {% endif %}
-
             <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item {% if (session.masquerade) %}bg-masquerade{% endif %}">
+                <li class="nav-item">
                     <div>
                         <div id="appcenter"></div>
                     </div>
                 </li>
-
-                {% if (session.masquerade) %}
-                    <li class="dropdown bg-masquerade">
-                        <a href=""><i title="Kilépés" class="fa-fw fa fa-sign-out"></i></a>
-                    </li>
-                {% endif %}
 
                 <li class="nav-item">
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
@@ -105,12 +94,6 @@
             </a>
 
             <div class="sidebar">
-
-                {% if institute.id %}
-                    <ul class="sidebar-menu" data-widget="tree" style="height: 6px;">
-
-                    </ul>
-                {% endif %}
 
                 <nav class="mt-2">
 
@@ -162,22 +145,6 @@
         {% include "layouts/_control_sidebar.twig" %}
 
         <div class="content-wrapper">
-            {% if false and institute.id %}
-                <section class="content-intezmeny-header">
-                    <div style="box-shadow: 0 1px 1px rgba(0,0,0,0.1); color: #555555; background-color: #FFFFDD; margin: 0; padding: 6px; padding-left: 15px; padding-right: 15px; font-size: 17px;">
-                        <div><i class="fa-fw far fa-fw fa-star"></i> <b class="text-primary">{{ institute.vpid_prefix~institute.vpid }}</b> <b style="font-weight: 600; font-size: 1.2em;">{{ institute.nev }}</b>
-                        <div style="float: right; margin-left: 6px;" class="badge">
-                            Telephely
-                        </div>
-                        <div style="float: right;" class="badge">
-                            Diákháló
-                        </div>
-                        </div>
-
-                        <i class="fa-fw fa fa-fw"></i> <small style="font-size: 0.8em; font-weight: normal;"><i class="fa-fw far fa-map-marker-alt"></i> {{ institute.cim.iranyitoszam }} {{ institute.cim.telepules }}, {{ institute.cim.kozterulet_nev }} {{ institute.cim.kozterulet_tipus }} {{ institute.cim.hazszam }}</small>
-                    </div>
-                </section>
-            {% endif %}
 
             <section class="content-header">
                 <h1>
@@ -196,7 +163,7 @@
             <div class="float-right hidden-xs">
                 ALFI
             </div>
-            Copyright &copy; 2017-{{ now|date('Y') }} <a href="http://kifu.gov.hu" >KIFÜ</a>
+            Copyright &copy; 2017-{{ now | date('Y') }} <a href="http://kifu.gov.hu" >KIFÜ</a>
         </footer>
 
     </div>
@@ -226,7 +193,7 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
 
-    {# <script src="assets/bootstrap/js/bootstrap.min.js"></script> #}
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/chart.js/Chart.min.js"></script>
     <script src="assets/sparklines/sparkline.js"></script>
     <script src="assets/jquery-knob/jquery.knob.min.js"></script>
@@ -243,7 +210,7 @@
     <script src="assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
     <script src="assets/select2/js/select2.min.js"></script>
     <script src="assets/icheck/icheck.min.js?v=1.0.2"></script>
-
+    
     <!-- ALFI scripts -->
     <script src="js/alfi.js?{{ mtime('js/alfi.js') }}"></script>
     {# <script src="https://dev.profile.niif.hu/app/app.js?app_id={{ appcenter_app_id }}&token={{ appcenter_token }}"></script> #}

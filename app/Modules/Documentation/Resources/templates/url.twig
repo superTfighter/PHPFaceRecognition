@@ -1,0 +1,201 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Documentation</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/php.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">URL</h3>
+        </div>
+        <div class="card-body">
+            Ajax link megnyitása és feldolgozása. Amennyiben tag-en belül található font-awesome ikon az a betöltés idejére egy spinnere cserélődik.<br>
+            <br>
+            Használható tag-ek: <code><b>a, input, button</b></code><br>
+            Szükséges class: <code><b>ajax-url</b></code><br>
+            <br>
+
+            <h4>Attribútumok</h4>
+            <div class="form-group">
+                <table width="100%" border="0" cellpadding="10" class="attribs">
+                    <tr>
+                        <td>
+                            <code>href</code>
+                        </td>
+                        <td>
+                            Kötelező. Az ajax hívással megnyitandó URL alapból GET methodussal.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-ajax-method</code>
+                        </td>
+                        <td>
+                            Metódus módosítása (<code>GET, POST, PUT, DELETE</code>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap valign="top">
+                            <code>data-ajax-success-fn</code>,<br><code>data-ajax-fail-fn</code>
+                        </td>
+                        <td>
+                            Sikeres (data-ajax-ok-fn) / sikertelen (data-ajax-fail-fn) válasz esetén megfuttatandó javascript függvény neve.
+                            Sikeres minden 2xx <code>status</code> kóddal visszatérő válasz.
+                            A függvénynek két argumentuma kell hogy legyen.
+                            Az elsőben a válaszból a <code>header</code>-t (<code>status</code> és <code>statusText</code>-et),
+                            a másodikból pedig a <code>response</code>-t kapja meg a függvény.
+                            Amennyiben a response json a függvény strutkturáltan, ellenekző esetben string-ként kapja meg.<br>
+                            <br>
+                            Sikertelen válasz esetén, ha response json és tartalmaz message vagy
+                            messages kulcsot, megjelenítésre kerül a hozzájuk tartozó érték
+                            <a href="#"><code>alfi_alert</code></a> (toaster) segítségével.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4>Minták</h4>
+
+            <div class="form-group">
+                <a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">Ajax URL 1 (Sikeres teszt)</a>
+                <a href="{{ path_for('documentation_url_test1fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary"><i class="fa fa-fw fas fa-poo"></i> Ajax URL 1 (Sikertelen teszt)</a>
+
+                <script>
+
+                    function ajax_url_ok(header, response) {
+                        console.log('OK');
+                        console.log(header);
+                        console.log(response);
+                    }
+
+                    function ajax_url_fail(header, response) {
+                        console.log('FAIL');
+                        console.log(header);
+                        console.log(response);
+                    }
+
+                </script>
+
+            </div>
+
+            <div class="form-group">
+                <textarea id="example1" readonly>
+<a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">Ajax URL 1 (Sikeres teszt)</a>
+<a href="{{ path_for('documentation_url_test1fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary"><i class="fa fas fa-smile"></i> Ajax URL 1 (Sikertelen teszt)</a>
+
+<script>
+
+    function ajax_url_ok(header, response) {
+        console.log('OK');
+        console.log(header);
+        console.log(response);
+    }
+
+    function ajax_url_fail(header, response) {
+        console.log('FAIL');
+        console.log(header);
+        console.log(response);
+    }
+
+</script></textarea>
+            </div>
+
+            A sikeres válasz response-ja<br>
+            <textarea id="example2" readonly>Sikeres válasz, de ez nem JSON!</textarea>
+            <br>
+            A sikerestelen válasz response-ja<br>
+            <textarea id="example3" readonly>{"message":"Sikertelen k\u00e9r\u00e9s!"}</textarea><br>
+
+            <h4>Speciális eset</h4>
+
+            Ajax link megnyitása a háttérben megerősítő ablakkal.<br>
+            <br>
+            Használható tag-ek: <code><b>a, input, button</b></code><br>
+            Szükséges class: <code><b>ajax-confirmation-url</b></code><br>
+            <br>
+
+            <div class="form-group">
+                <a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">Ajax megerősítéses URL</a>
+
+                <script>
+
+                    function ajax_url_ok(header, response) {
+                        console.log('OK');
+                        console.log(header);
+                        console.log(response);
+                    }
+
+                    function ajax_url_fail(header, response) {
+                        console.log('FAIL');
+                        console.log(header);
+                        console.log(response);
+                    }
+
+                </script>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1' ), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: "nocursor",
+    height: "auto"
+});   
+CodeMirror.fromTextArea( document.getElementById('example2'), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: "nocursor",
+    height: "auto"
+});
+CodeMirror.fromTextArea( document.getElementById('example3'), {
+    lineNumbers: true,
+    mode: "php",
+    readOnly: "nocursor",
+    height: "auto"
+});
+
+</script>
+
+{% endblock %}

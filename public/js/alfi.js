@@ -103,21 +103,78 @@ function app_load_init() {
 
     // Init
 
+    // ========
+    // AJAX URL
+    // ========
+
+    // Init
+
     $('a.ajax-url, input.ajax-url, button.ajax-url').unbind();
     $('a.ajax-url, input.ajax-url, button.ajax-url').bind('click', function() {
         var $this = $(this);
         if ($this.attr('href') && $this.attr('href') != '#') {
+            $('i.fa', $this).addClass('fa-spin fa-spinner');
             $.ajax({
                 url    : $this.attr('href'),
                 type   : $this.attr('data-ajax-method')?$this.attr('data-ajax-method'):'GET',
-                success: function (data) {
-                    if ($this.attr('data-ajax-succes-eval')) {
-                        eval( $this.attr('data-ajax-success-eval') );
+            }).done( function(data, textStatus, jqXHR) {
+                if ($this.data('ajax-success-fn')) {
+                    if (typeof window[$this.data('ajax-success-fn')] === "function") {
+                        var header = {
+                            'status': jqXHR.status,
+                            'statusText': jqXHR.statusText
+                        };
+                        if (jqXHR.responseJSON) {
+                            response = jqXHR.responseJSON;
+                        }
+                        else {
+                            response = jqXHR.responseText;
+                        }
+                        window[$this.data('ajax-success-fn')](header, response);
                     }
                 }
-            })
-        }
+                $('i.fa', $this).removeClass('fa-spin fa-spinner');
+            }).fail( function(jqXHR, textStatus, errorThrown) {
+                if ($this.data('ajax-fail-fn')) {
+                    if (typeof window[$this.data('ajax-fail-fn')] === "function") {
+                        var header = {
+                            'status': jqXHR.status,
+                            'statusText': jqXHR.statusText
+                        };
+                        if (jqXHR.responseJSON) {
+                            response = jqXHR.responseJSON;
+                        }
+                        else {
+                            response = jqXHR.responseText;
+                        }
+                        window[$this.data('ajax-fail-fn')](header, response);
+                    }
+                }
+                $('i.fa', $this).removeClass('fa-spin fa-spinner');
+
+                json_data = jqXHR.responseJSON;
+                        
+                if (json_data) {
+                    var return_message = '';
+
+                    if (json_data.message) {
+                        return_message = json_data.message;
+                    }
+
+                    if (json_data.messages) {
+                        $.each(json_data.messages, function(i, e) {
+                            return_message = return_message + e + '<br>';                        
+                        });                        
+                    }
+
+                    if (return_message) {
+                        alfi_alert(return_message, '', 'error', { "closeButton": true, "timeOut": 0 } );
+                    }
+
+                }
+            });
         return false;
+        }
     });
 
     // =========
@@ -228,61 +285,85 @@ function app_load_init() {
         rootSelector: 'a.ajax-confirmation-url',
         singleton   : true,
 
-        btnOkClass: 'btn- btn-xs btn-primary btn-ok',
+        btnOkClass: 'btn btn-xs btn-primary btn-ok',
         btnOkLabel: 'Igen',
         btnOkIcon : 'fa fa-check',
 
-        btnCancelClass: 'btn- btn-xs btn-default btn-cancel',
+        btnCancelClass: 'btn btn-xs btn-default btn-cancel',
         btnCancelLabel: 'Nem',
         btnCancelIcon : 'fa fa-times',
 
         html: true,
 
         onConfirm: function() {
-            var remove_obj = $(this);
-            if (remove_obj.attr('ajax-href')) {
-                remove_obj_method = 'GET';
-                if (remove_obj.attr('data-ajax-method')) {
-                    remove_obj_method = remove_obj.attr('data-ajax-method');
+            var $this = $(this);
+            if ($this.attr('ajax-href')) {
+                remove_method = 'GET';
+                if ($this.attr('data-ajax-method')) {
+                    remove_method = $this.attr('data-ajax-method');
                 }
 
                 $.ajax({
-                    url : remove_obj.attr('ajax-href'),
-                    type: remove_obj_method,
-                }).done( function(json_data) {
-                    if (json_data.data) {
-                        if (json_data.data.data){
-                            remove_obj.attr('data-ajax-success-return', json_data.data.data);
+                    url : $this.attr('ajax-href'),
+                    type: remove_method,
+                }).done( function(data, textStatus, jqXHR) {
+                    if ($this.data('ajax-success-fn')) {
+                        if (typeof window[$this.data('ajax-success-fn')] === "function") {
+                            var header = {
+                                'status': jqXHR.status,
+                                'statusText': jqXHR.statusText
+                            };
+                            if (jqXHR.responseJSON) {
+                                response = jqXHR.responseJSON;
+                            }
+                            else {
+                                response = jqXHR.responseText;
+                            }
+                            window[$this.data('ajax-success-fn')](header, response);
                         }
                     }
-                    if ( remove_obj.attr('data-ajax-success-eval') ) {
-                        eval( remove_obj.attr('data-ajax-success-eval') );
+                    $('i.fa', $this).removeClass('fa-spin fa-spinner');
+                }).fail( function(jqXHR, textStatus, errorThrown) {
+                    if ($this.data('ajax-fail-fn')) {
+                        if (typeof window[$this.data('ajax-fail-fn')] === "function") {
+                            var header = {
+                                'status': jqXHR.status,
+                                'statusText': jqXHR.statusText
+                            };
+                            if (jqXHR.responseJSON) {
+                                response = jqXHR.responseJSON;
+                            }
+                            else {
+                                response = jqXHR.responseText;
+                            }
+                            window[$this.data('ajax-fail-fn')](header, response);
+                        }
                     }
-                    
-                    
-                }).fail( function( data ) {
-
-                    json_data = data.responseJSON;
-
+                    $('i.fa', $this).removeClass('fa-spin fa-spinner');
+    
+                    json_data = jqXHR.responseJSON;
+                            
                     if (json_data) {
-                        if (json_data.validation_messages) {
-                            var validation_message = '';
-                            $.each(json_data.validation_messages, function(i, e) {
-                                validation_message = validation_message + e + '<br>';
-                            });
+                        var return_message = '';
+    
+                        if (json_data.message) {
+                            return_message = json_data.message;
                         }
-                        else {
-                            var validation_message = json_data.statusText;
+    
+                        if (json_data.messages) {
+                            $.each(json_data.messages, function(i, e) {
+                                return_message = return_message + e + '<br>';                        
+                            });                        
                         }
-                        alfi_alert(validation_message, '', 'error', { "closeButton": true, "timeOut": 0 } );
+    
+                        if (return_message) {
+                            alfi_alert(return_message, '', 'error', { "closeButton": true, "timeOut": 0 } );
+                        }
                     }
-                    else {
-                        alfi_alert(data.statusText, '', 'error', { "closeButton": true, "timeOut": 0 });
-                    }
+                });
 
-                })
+                return false;
             }
-            return false;
         }
     });
 
@@ -314,6 +395,15 @@ function app_load_init() {
 			})
 		)
 	});
+
+    // Localization
+
+    $.extend( true, $.fn.dataTable.defaults, {
+        'language'  : { 'url': 'assets/datatables/Hungarian.json' },
+        'dom'       : '<"float-left"B><"float-right"f>rt<"row"<"col-sm-6"l><"col-sm-6"p>>',
+        "lengthMenu": [ [30, 100, -1], [30, 100, "Összes"] ],
+        'pageLength': 30,
+    });
 
     // ==========
     // DATEPICKER

@@ -14,6 +14,39 @@ class MainAction
 {
 	use CoreTrait;
 
+    // Form
+
+    public function form(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, '@Documentation/form.twig');
+    }
+
+    public function formTest(Request $request, Response $response, $args)
+    {
+        $parsedBody = $request->getParsedBody();
+        $method     = $request->getMethod();
+
+        $validator =  $this->{'@Documentation\Validation'}->validator("formTest", $method, $parsedBody);
+
+        if (is_array($validator)) {
+            return $response->withJson(array(
+                'messages' => $validator
+            ), 400);
+        }
+
+        if ($parsedBody['select1'] == 'ok') {
+            return $response->withJson([
+                "message" => 'Sikeres művelet lett kiválasztva!'
+            ], 200);
+        }
+        else {
+            sleep(1);
+            return $response->withJson([
+                "message" => 'Sikertelen művelet lett kiválasztva!'
+            ], 400);
+        }
+    }
+
     // URL
 
     public function url(Request $request, Response $response, $args)
@@ -21,12 +54,12 @@ class MainAction
         return $this->view->render($response, '@Documentation/url.twig');
     }
 
-    public function urlTest1OK(Request $request, Response $response, $args)
+    public function urlTestOK(Request $request, Response $response, $args)
     {
         return $response->write('Sikeres válasz, de ez nem JSON!', 200);
     }
 
-    public function urlTest1Fail(Request $request, Response $response, $args)
+    public function urlTestFail(Request $request, Response $response, $args)
     {
         sleep(3);
         return $response->withJson([
@@ -41,6 +74,32 @@ class MainAction
         return $this->view->render($response, '@Documentation/modal.twig');
     }
 
+    public function modalTest(Request $request, Response $response, $args)
+    {
+        sleep(1);
+
+        $data = array(
+            'kutya', 'macska', 'borz'
+        );
+
+        return $this->view->render($response, '@Documentation/modal/modal_test.twig', ['data' => $data]); 
+    }
+
+    public function modalTestJSON(Request $request, Response $response, $args)
+    {
+        $data = array(
+            'kutya', 'macska', 'borz'
+        );
+
+        return $response->withJson([
+            'modal-title'  => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'title'),
+            'modal-body'   => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'body', ['data' => $data]),
+            'modal-footer' => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'footer')
+        ], 200);
+    }
+
+    // DATATABLE
+
     public function datatable(Request $request, Response $response, $args)
     {
         return $this->view->render($response, '@Documentation/datatable.twig');
@@ -51,14 +110,6 @@ class MainAction
         return $this->view->render($response, '@Documentation/css_js.twig');
     }
 
-    public function modalJSONResponse(Request $request, Response $response, $args)
-    {
-        return $response->withJson([
-            'modal-title'  => 'This title came from a <b>JSON response</b>',
-            'modal-body'   => '<button class="btn btn-primary">HTML content\'s allowed</button>',
-            'modal-footer' => '<a class="close btn btn-default">Mégse</a>',
-        ], 200);
-    }
 
     public function datatableJSONResponse(Request $request, Response $response, $args)
     {
@@ -112,39 +163,4 @@ class MainAction
         ], 200);
     }
 
-    public function modalTest1(Request $request, Response $response, $args)
-    {
-        $data = $this->api->iir->call('/cim', ['query' => ['limit' => 5]]);
-
-        return $this->view->render($response, '@Documentation/modal/modal_test1.twig', ['data' => $data]);   
-    }
-
-    public function modalTest2(Request $request, Response $response, $args)
-    {
-        return $this->view->render($response, '@Documentation/modal/modal_test2.twig');   
-    }
-
-    // Submit hook
-    public function formTest1(Request $request, Response $response, $args)
-    {
-
-        // start Validator block
-        $body   = $request->getParsedBody();
-        $method = $request->getMethod();
-
-        // Custom module validation rules
-        $validator =  $this->{'@Documentation\Validation'}->validator("test", $method, $body);
-        // end Validator block
-
-
-        return $response->withJson(array(
-            'info'    => 'Invalid parameter',
-            'status'  => 'ERROR',
-            't' => $validator,
-            'validation_messages' => array(
-                'Nincs jogosultsága a művelethez!'
-            ),
-            'code' => 400
-        ), 400);
-    }
 }

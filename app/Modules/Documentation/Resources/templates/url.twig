@@ -91,8 +91,12 @@
             <h4>Minták</h4>
 
             <div class="form-group">
-                <a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">Ajax URL 1 (Sikeres teszt)</a>
-                <a href="{{ path_for('documentation_url_test1fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary"><i class="fa fa-fw fas fa-poo"></i> Ajax URL 1 (Sikertelen teszt)</a>
+                <a href="{{ path_for('documentation_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+                    Ajax URL 1 (Sikeres teszt)
+                </a>
+                <a href="{{ path_for('documentation_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+                    <i class="fa fa-fw fas fa-poo"></i> Ajax URL 1 (Sikertelen teszt)
+                </a>
 
                 <script>
 
@@ -114,8 +118,13 @@
 
             <div class="form-group">
                 <textarea id="example1" readonly>
-<a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">Ajax URL 1 (Sikeres teszt)</a>
-<a href="{{ path_for('documentation_url_test1fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary"><i class="fa fas fa-smile"></i> Ajax URL 1 (Sikertelen teszt)</a>
+<a href="{{ path_for('documentation_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+    Ajax URL 1 (Sikeres teszt)
+</a>
+
+<a href="{{ path_for('documentation_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+    <i class="fa fas fa-smile"></i> Ajax URL 1 (Sikertelen teszt)
+</a>
 
 <script>
 
@@ -142,31 +151,54 @@
 
             <h4>Speciális eset</h4>
 
-            Ajax link megnyitása a háttérben megerősítő ablakkal.<br>
+            Ajax link megnyitása a háttérben megerősítő ablakkal. A megjelenítés alapja a jQuery popover és confirmation.<br>
             <br>
-            Használható tag-ek: <code><b>a, input, button</b></code><br>
+            Használható tag-ek: csak <code><b>a</b></code><br>
             Szükséges class: <code><b>ajax-confirmation-url</b></code><br>
             <br>
 
+            <h4>Attribútumok</h4>
+            A fenti attribútumokon túl használható további attribútumok<br>
             <div class="form-group">
-                <a href="{{ path_for('documentation_url_test1ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">Ajax megerősítéses URL</a>
+                <table width="100%" border="0" cellpadding="10" class="attribs">
+                    <tr>
+                        <td>
+                            <code>data-title</code>
+                        </td>
+                        <td>
+                            A megjelenő megerősítő ablak fejléce.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>data-content</code>
+                        </td>
+                        <td>
+                            A megjelenő megerősítő ablak szövege. Használható benne HTML. Opcionális
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-                <script>
+            <h4>Minták</h4>
 
-                    function ajax_url_ok(header, response) {
-                        console.log('OK');
-                        console.log(header);
-                        console.log(response);
-                    }
+            <div class="form-group">
+                <a href="{{ path_for('documentation_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+                    <i class="fa fa-fw fa-question-circle"></i> Ajax megerősítéses URL (Sikeres teszt)
+                </a>
+                <a href="{{ path_for('documentation_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+                    <i class="fa fa-fw fa-poo"></i> Ajax megerősítéses URL (Sikertelen teszt)
+                </a>
+            </div>
 
-                    function ajax_url_fail(header, response) {
-                        console.log('FAIL');
-                        console.log(header);
-                        console.log(response);
-                    }
-
-                </script>
-
+            <div class="form-group">
+                <textarea id="example4" readonly>
+<a href="{{ path_for('documentation_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+    <i class="fa fa-fw fa-question-circle"></i> Ajax megerősítéses URL (Sikeres teszt)
+</a>
+<a href="{{ path_for('documentation_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+    <i class="fa fa-fw fa-poo"></i> Ajax megerősítéses URL (Sikertelen teszt)
+</a></textarea>
             </div>
 
         </div>
@@ -190,6 +222,12 @@ CodeMirror.fromTextArea( document.getElementById('example2'), {
     height: "auto"
 });
 CodeMirror.fromTextArea( document.getElementById('example3'), {
+    lineNumbers: true,
+    mode: "php",
+    readOnly: "nocursor",
+    height: "auto"
+});
+CodeMirror.fromTextArea( document.getElementById('example4'), {
     lineNumbers: true,
     mode: "php",
     readOnly: "nocursor",

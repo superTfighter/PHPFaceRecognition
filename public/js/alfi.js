@@ -20,15 +20,41 @@ function app_load_init() {
         let modal = '.modal .modal-dialog .modal-content > ';
         $(modal +'.modal-footer').hide();
 
+        $(modal + '.modal-header .modal-title').html('');
+        $(modal + '.modal-body').html( "<div class='loader'><i class='fa fa-spin fa-spinner'></i></div>" );
+
+
         // Set the modal's width if the button's data-modal-width attribute exists
+        $('div.modal .modal-dialog').css({
+            'width': ''
+        });
         if ($(this).data('modal-width')) {
             $('div.modal .modal-dialog').css({
                 'width': $(this).data('modal-width') +'px'
             });
         }
 
+        // Set the modal special class
+        if ($('div.modal').data('modal-class')) {
+            $('div.modal').removeClass($('div.modal').data('modal-class'));
+            $('div.modal').data('modal-class', '');
+        }
+        if ($(this).data('modal-class')) {
+            $('div.modal').addClass( $(this).data('modal-class') );
+            $('div.modal').data('modal-class', $(this).data('modal-class'));
+        }
+
+        if ($('div.modal .modal-dialog').data('modal-dialog-class')) {
+            $('div.modal .modal-dialog').removeClass($('div.modal .modal-dialog').data('modal-dialog-class'));
+            $('div.modal .modal-dialog').data('modal-dialog-class', '');
+        }
+        if ($(this).data('modal-dialog-class')) {
+            $('div.modal .modal-dialog').addClass( $(this).data('modal-dialog-class') );
+            $('div.modal .modal-dialog').data('modal-dialog-class', $(this).data('modal-dialog-class'));
+        }
+
         // Set the modal's title as the button's data-modal-title or it's text
-        $(modal +'.modal-header .modal-title').html( $(this).data('modal-title') || $(this).text() );
+        $(modal + '.modal-header .modal-title').html( $(this).data('modal-title') || $(this).text() );
     	
         $('div.modal').modal('show');
         
@@ -49,17 +75,6 @@ function app_load_init() {
                 }
                 else {
                     $(modal +'.modal-body').html( data );
-                    if ( $(modal +'.modal-body .modal-body').text() || $(modal +'.modal-body .modal-title').text() ) {
-                        if ($(modal +'.modal-body .modal-header').text()) {
-                            $(modal +'.modal-header .modal-title').html( $(modal +'.modal-body .modal-title').html() );
-                            $(modal +'.modal-header').css('display', 'block');
-                        }
-                        if ($(modal +'.modal-body .modal-footer').text()) {
-                            $(modal +'.modal-footer').html( $(modal +'.modal-body .modal-footer').html() );
-                            $(modal +'.modal-footer').css('display', 'block');
-                        }
-                        $(modal +'.modal-body').html( $(modal +'.modal-body .modal-body').html() );
-                    };
                 }
             }).fail( function() {
                 $(modal +'.modal-body').html( "<span class='text-danger'>Hiba! :(</span>" );
@@ -96,12 +111,6 @@ function app_load_init() {
     $('a.close', 'div.modal').on('click', function () {
 		$('div.modal').modal('hide');
 	});
-
-    // ========
-    // AJAX URL
-    // ========
-
-    // Init
 
     // ========
     // AJAX URL
@@ -185,7 +194,10 @@ function app_load_init() {
 
     $('form.ajax-form').unbind();
     $('form.ajax-form').bind('submit', function() {
-        $('.form-group', this).removeClass('has-error');
+        $('.is-invalid', this).removeClass('is-invalid');
+
+        $('[type=submit]', $this).removeClass('btn-danger');
+        $('[type=submit]', $this).addClass('btn-primary');
 
         var $this = $(this);
 
@@ -195,11 +207,7 @@ function app_load_init() {
             }
         }
 
-        var before_class = $('.btn-save i', $this).attr('class');
-        $('.btn-save i', $this).addClass('fa fa-spinner fa-spin');
-
-        $('.btn-save', $this).addClass('btn-primary');
-        $('.btn-save', $this).removeClass('btn-danger');
+        $('[type=submit] i.fa', $this).addClass('fa-spinner fa-spin');
 
         $.ajax({
             type       : "POST",
@@ -210,6 +218,8 @@ function app_load_init() {
             contentType: false,
             cache      : false
         }).done( function(data, textStatus, jqXHR) {
+            $('[type=submit] i.fa', $this).removeClass('fa-spinner fa-spin');
+
             if ($this.data('ajax-success-fn')) {
                 if (typeof window[$this.data('ajax-success-fn')] === "function") {
                     var header = {
@@ -220,9 +230,10 @@ function app_load_init() {
                 }
             }
 
-            $('[type=submit] i', $this).attr('class', before_class);
-
         }).fail( function(jqXHR, textStatus, errorThrown) {
+            $('[type=submit]', $this).addClass('btn-danger');
+            $('[type=submit]', $this).removeClass('btn-primary');
+            $('[type=submit] i.fa', $this).removeClass('fa-spinner fa-spin');
 
             if ($this.data('ajax-fail-fn')) {
                 if (typeof window[$this.data('ajax-fail-fn')] === "function") {
@@ -234,30 +245,29 @@ function app_load_init() {
                 }
             }
 
-            $('[type=submit]', $this).addClass('btn-danger');
-            $('[type=submit]', $this).removeClass('btn-primary');
-
-            $('[type=submit] i', $this).attr('class', before_class);
 
             json_data = jqXHR.responseJSON;
 
             if (json_data) {
-                if (json_data.validation_messages) {
-                    var validation_message = '';
-                    $.each(json_data.validation_messages, function(i, e) {
-                        $('[name='+i+']', $this).closest('.form-group').addClass('has-error');
-                        validation_message = validation_message + e + '<br>';
+                var message = '';
+                if (json_data.message) {
+                    message = json_data.message;
+                }
+                else
+                if (json_data.messages) {
+                    $.each(json_data.messages, function(i, e) {
+                        $('[name='+i+']', $this).addClass('is-invalid');
+                        message = message + e + '<br>';
                     });
                 }
                 else {
-                    var validation_message = json_data.statusText;
+                    message = json_data.statusText;
                 }
-                alfi_alert(validation_message, '', 'error', { "closeButton": true, "timeOut": 0 } );
+                alfi_alert(message, '', 'error', { "closeButton": true, "timeOut": 0 } );
             }
             else {
                 alfi_alert(data.statusText, '', 'error', { "closeButton": true, "timeOut": 0 });
             }
-
         });
 
         return false;
@@ -265,19 +275,26 @@ function app_load_init() {
 
     // Remove error class on change
 
-    $('form.form .form-group input').on('keyup', function() {
-        $(this).closest('.form-group').removeClass('has-error');
+    $('form.form input').on('keyup', function() {
+        $(this).removeClass('is-invalid');
     });
 
-    $('form.form .form-group select').on('change', function() {
-        $(this).closest('.form-group').removeClass('has-error');
+    $('form.form select').on('change', function() {
+        $(this).removeClass('is-invalid');
     });   
 
-    // =================
-    // AJAX CONFIRMATION
-    // =================
+    // =====================
+    // AJAX CONFIRMATION URL
+    // =====================
 
     // Init
+
+    $.each( $('a.ajax-confirmation-url'), function(index, item) {
+        if ($(item).attr('href') && $(item).attr('href') != '#') {
+            $(item).data('href', $(item).attr('href'));
+            $(item).attr('href', '#')
+        }
+    });
 
     $('a.ajax-confirmation-url').unbind();
     $('a.ajax-confirmation-url').confirmation({
@@ -297,15 +314,16 @@ function app_load_init() {
 
         onConfirm: function() {
             var $this = $(this);
-            if ($this.attr('ajax-href')) {
-                remove_method = 'GET';
+            if ($this.data('href')) {
+                $('i.fa', $this).addClass('fa-spin fa-spinner');
+                this_method = 'GET';
                 if ($this.attr('data-ajax-method')) {
-                    remove_method = $this.attr('data-ajax-method');
+                    this_method = $this.attr('data-ajax-method');
                 }
 
                 $.ajax({
-                    url : $this.attr('ajax-href'),
-                    type: remove_method,
+                    url : $this.data('href'),
+                    type: this_method,
                 }).done( function(data, textStatus, jqXHR) {
                     if ($this.data('ajax-success-fn')) {
                         if (typeof window[$this.data('ajax-success-fn')] === "function") {
@@ -369,7 +387,7 @@ function app_load_init() {
 
     // Multi fixer
 
-    var last_confirmation_clicked;
+    var last_confirmation_clicked = '';
 
     $('a.ajax-confirmation-url').click( function() {
         if (last_confirmation_clicked && last_confirmation_clicked != this) {
@@ -379,22 +397,6 @@ function app_load_init() {
         last_confirmation_clicked = this;
         return false;
     });
-
-    // =========
-    // DATATABLE
-    // =========
-
-    // Filter reset
-
-	$(document).on( 'init.dt', function ( e, settings ) {
-		$('input[type=search]', $('.dataTable').closest('.dataTables_wrapper') ).after(
-			$('<span>').addClass('dataTables_filter_reset').append(
-				$('<i>').addClass('fa fa-times')
-			).on('click', function() {
-				$(this).closest('.dataTables_wrapper').find('.dataTable').DataTable().search('').draw();
-			})
-		)
-	});
 
     // Localization
 
@@ -477,6 +479,14 @@ function app_load_init() {
 // ###                   ###
 // #########################
 // #########################
+
+// ========
+// SELECT 2
+// ========
+
+// Globals
+
+$.fn.select2.defaults.set( "theme", "bootstrap4" );
 
 $(function() {
 

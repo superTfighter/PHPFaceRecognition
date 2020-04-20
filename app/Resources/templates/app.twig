@@ -30,6 +30,7 @@
     {# <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> #}
     <link rel="stylesheet" href="assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="assets/select2/css/select2.min.css">
+    <link rel="stylesheet" href="assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <link rel="stylesheet" href="assets/toastr/toastr.min.css">
     <link rel="stylesheet" href="assets/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="assets/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -124,6 +125,13 @@
                                 </li>
 
                                 <li class="nav-item">
+                                    <a class="nav-link {{ is_active_path('documentation/form') }}" href="{{ path_for('documentation_form') }}">
+                                        <i class="far fa-fw fa-edit"></i>
+                                        <p>Form</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link {{ is_active_path('documentation/datatable') }}" href="{{ path_for('documentation_datatable') }}">
                                         <i class="far fa-fw fa-table"></i>
                                         <p>Datatable</p>
@@ -132,7 +140,7 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active_path('documentation/css-and-js') }}" href="{{ path_for('documentation_css_js') }}">
-                                        <i class="far fa-fw fa-table"></i>
+                                        <i class="far fa-fw fa-paint-brush"></i>
                                         <p>CSS & JS</p>
                                     </a>
                                 </li>
@@ -175,7 +183,7 @@
 
 
     <div class="fade modal" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title float-left"></h5>

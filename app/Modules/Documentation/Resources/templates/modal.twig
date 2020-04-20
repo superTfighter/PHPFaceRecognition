@@ -32,6 +32,10 @@
     table.attribs tr td {
         font-weight: normal;
     }
+
+    .modal-spec {
+        background: rgba(0,0,0,0.75);
+    }
   </style>
 
 {% endblock %}
@@ -76,54 +80,64 @@
                             Opcionális. A modal szélessége az attribútumban megadott pixel méretre változik.
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <code>data-modal-class</code>
+                        </td>
+                        <td>
+                            A modal skeletonjában <code>modal</code> class-t tartalmzó <code>div</code>-re felkerül az attribútumban megadott class.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap>
+                            <code>data-modal-dialog-class</code>
+                        </td>
+                        <td>
+                            A modal skeletonjában <code>modal-dialog</code> class-t tartalmzó <code>div</code>-re felkerül az attribútumban megadott class.
+                        </td>
+                    </tr>
                 </table>
             </div>
 
             <h4>Minták</h4>
 
             <div class="form-group">
-                <a href="{{ path_for('documentation_modal_test1') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal open 1</a>
-                <a href="{{ path_for('documentation_modal_test2') }}" data-modal-title="Test 2" class="ajax-modal btn btn-primary">Ajax modal open 2</a>
-                <a href="{{ path_for('documentation_modal_json') }}"                              class="ajax-modal btn btn-primary">Ajax JSON modal open</a>
+                <a href="{{ path_for('documentation_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal</a>
+                <a href="{{ path_for('documentation_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">Ajax modal with JSON</a>
             </div>
 
             <div class="form-group">
                 <textarea id="example1" readonly>
-<a href="{{ path_for('documentation_modal_test1') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal open 1</a>
-<a href="{{ path_for('documentation_modal_test2') }}" data-modal-title="Test 2" class="ajax-modal btn btn-primary">Ajax modal open 2</a>
-<a href="{{ path_for('documentation_modal_json') }}"                              class="ajax-modal btn btn-primary">Ajax JSON modal open</a></textarea>
+<style>
+    .modal-spec {
+        background: rgba(0,0,0,0.75);
+    }
+</style>
+
+<a href="{{ path_for('documentation_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">
+    Ajax modal
+</a>
+<a href="{{ path_for('documentation_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">
+    Ajax modal with JSON
+</a></textarea>
              </div>
 
             <h4>Speciális esetek</h4>
             <div class="form-group">
-                Ha a modal minden részére kihatással szeretnénk lenni és használni akarjuk a láblécét - mondjuk gombokat akarunk bele tenni - esetleg egyedi fejléc tartalmat akarunk,
-                akkor a válaszban az alábbi skeleton megoldást használjuk.
+                Ha a modal minden részére kihatással szeretnénk lenni és használni akarjuk a
+                láblécét - mondjuk gombokat akarunk bele tenni - esetleg egyedi fejléc tartalmat akarunk,
+                akkor egy megfelelő JSON válasz segítségével ezt megtehetjük.
             </div>
             <div class="form-group">
-                <textarea id="example2" readonly>
-<div class="modal-header">
-    Fejléc
-</div>
-<div class="modal-body">
-    Tartalmi rész
-    <form method="POST" id="form1">
-        <input type="text" name="input1"/>
-    </form>
-</div>
-<div class="modal-footer">
-    <input type="button" id="button1" value="Küldés" class="btn btn-primary">
-    <script>
-        $('#button1').submit();
-    </script>
-</div></textarea>
-<br>
+                
+                <h4>JSON válasz</h4>
 
-<h4>JSON forrás használata</h4>
-<textarea id="example3" readonly>return $response->withJson(array(
-    'modal-title'  => 'This title came from a <b>JSON response</b>',
-    'modal-body'   => '<button class="btn btn-primary">HTML content\'s allowed</button>',
-    'modal-footer' => '<a class="close btn btn-default">Mégse</a>',
-), 200);</textarea>
+                <textarea id="example2" readonly>{
+    modal-title: "This title came from a <b>JSON response</b>",
+    modal-body: "<button class="btn btn-primary">HTML content's allowed</button>",
+    modal-footer: "<a class="close btn btn-default">Mégse</a>"
+}</textarea>
+
              </div>
 
         </div>
@@ -143,12 +157,6 @@ CodeMirror.fromTextArea( document.getElementById('example1' ), {
 CodeMirror.fromTextArea( document.getElementById('example2'), {
     lineNumbers: true,
     mode: "xml",
-    readOnly: "nocursor",
-    height: "auto"
-});
-CodeMirror.fromTextArea( document.getElementById('example3'), {
-    lineNumbers: true,
-    mode: "php",
     readOnly: "nocursor",
     height: "auto"
 });

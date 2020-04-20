@@ -1,0 +1,249 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Documentation</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/php.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">Form</h3>
+        </div>
+        <div class="card-body">
+            A form POST-olása ajax híváson keresztül történik.<br>
+            <br>
+            Használható tag-ek: <code><b>form</b></code><br>
+            Szükséges class: <code><b>ajax-form</b></code><br>
+            <br>
+
+            <h4>Attribútumok</h4>
+            <div class="form-group">
+                <table width="100%" border="0" cellpadding="10" class="attribs">
+                    <tr>
+                        <td nowrap valign="top">
+                            <code>data-ajax-success-fn</code>,<br><code>data-ajax-fail-fn</code>
+                        </td>
+                        <td>
+                            Sikeres (data-ajax-ok-fn) / sikertelen (data-ajax-fail-fn) válasz esetén megfuttatandó javascript függvény neve.
+                            Sikeres minden 2xx <code>status</code> kóddal visszatérő válasz.
+                            A függvénynek két argumentuma kell hogy legyen.
+                            Az elsőben a válaszból a <code>header</code>-t (<code>status</code> és <code>statusText</code>-et),
+                            a másodikból pedig a <code>response</code>-t kapja meg a függvény.
+                            Amennyiben a response json a függvény strutkturáltan, ellenekző esetben string-ként kapja meg.<br>
+                            <br>
+                            Sikertelen válasz esetén, ha response json és tartalmaz message vagy
+                            messages kulcsot, megjelenítésre kerül a hozzájuk tartozó érték
+                            <a href="#"><code>alfi_alert</code></a> (toaster) segítségével.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td nowrap valign="top">
+                            <code>data-submit-fn</code>
+                        </td>
+                        <td>
+                            A form postolása esetén az ajax hívás előtt megfuttatható függvény neve. Argumentumokat nem kap!
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4>Minta</h4>
+
+            <div class="form-group">
+                <form class="form ajax-form" method="POST" action="{{ path_for('documentation_form_test') }}" data-ajax-success-fn="form_ajax_success" data-ajax-fail-fn="form_ajax_fail" data-submit-fn="form_ajax_on_submit">
+                    <div class="form-group">
+                        <label>Szám</label>
+                        <input type="text" name="numeric" placeholder="Szám" class="form-control"/>
+                        <small class="form-text text-muted" id="numericHelp">Ide csak számot lehet írni</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-mail cím</label>
+                        <input type="text" name="email" placeholder="E-mail cím" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Válasz kiválasztása</label>
+                        <select class="form-control" name="select1">
+                            <option selected value=""></option>
+                            <option value="ok">Sikeres ;-)</option>
+                            <option value="fail">Sikertelen :-(</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select 2</label>
+                        <select class="form-control" name="select2">
+                            <option value="option A">option A</option>
+                            <option value="option B">option B</option>
+                            <option value="option C">option C</option>
+                        </select>
+                        <small class="form-text text-muted" id="input1Help">Select2-vel szépítve!</small>
+
+                        <script>
+                            $(document).ready( function() {
+                                $('[name=select2]').select2();
+                            });
+                        </script>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ide jön majd a válasz</label>
+                        <textarea name="response" class="form-control" readonly></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"/><i class="fa fa-fw fa-save"></i> Küldés</button>
+
+                    <script>
+                        function form_ajax_on_submit() {
+                            console.log("POST");
+                        }
+                        function form_ajax_success(header, data) {
+                            console.log("SUCCESS");
+                            console.log(header);
+                            console.log(data);
+                            $('[name=response]').val(JSON.stringify(data));
+                        }
+
+                        function form_ajax_fail(header, data) {
+                            console.log("FAIL");
+                            console.log(header);
+                            console.log(data);
+                            $('[name=response]').val(JSON.stringify(data));
+                        }
+                    </script>
+                </form>
+            </div>
+
+            <div class="form-group">
+                <textarea id="example1" readonly>
+<form class="form ajax-form" method="POST" action="{{ path_for('documentation_form_test') }}" data-ajax-success-fn="form_ajax_success" data-ajax-fail-fn="form_ajax_fail" data-submit-fn="form_ajax_on_submit">
+    <div class="form-group">
+        <label>Szám</label>
+        <input type="text" name="numeric" placeholder="Szám" class="form-control"/>
+        <small class="form-text text-muted" id="numericHelp">Ide csak számot lehet írni</small>
+    </div>
+
+    <div class="form-group">
+        <label>E-mail cím</label>
+        <input type="text" name="email" placeholder="E-mail cím" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label>Válasz kiválasztása</label>
+        <select class="form-control" name="select1">
+            <option selected value=""></option>
+            <option value="ok">Sikeres ;-)</option>
+            <option value="fail">Sikertelen :-(</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Select 2</label>
+        <select class="form-control" name="select2">
+            <option value="option A">option A</option>
+            <option value="option B">option B</option>
+            <option value="option C">option C</option>
+        </select>
+        <small class="form-text text-muted" id="input1Help">Select2-vel szépítve!</small>
+
+        <script>
+            $(document).ready( function() {
+                $('[name=select2]').select2();
+            });
+        </script>
+    </div>
+
+    <div class="form-group">
+        <label>Ide jön majd a válasz</label>
+        &lt;textarea name="response" class="form-control" readonly&gt;&lt;/textarea&gt;
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-save"></i> Küldés</button>
+
+    <script>
+        function form_ajax_on_submit() {
+            console.log("POST");
+        }
+        function form_ajax_success(header, data) {
+            console.log("SUCCESS");
+            console.log(header);
+            console.log(data);
+            $('[name=response]').val(JSON.stringify(data));
+        }
+
+        function form_ajax_fail(header, data) {
+            console.log("FAIL");
+            console.log(header);
+            console.log(data);
+            $('[name=response]').val(JSON.stringify(data));
+        }
+    </script>
+</form>
+</textarea>
+             </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1' ), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: "nocursor",
+    height: "auto"
+});   
+CodeMirror.fromTextArea( document.getElementById('example2'), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: "nocursor",
+    height: "auto"
+});
+CodeMirror.fromTextArea( document.getElementById('example3'), {
+    lineNumbers: true,
+    mode: "php",
+    readOnly: "nocursor",
+    height: "auto"
+});
+
+</script>
+
+{% endblock %}

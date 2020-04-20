@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\HelloWorld;
+namespace App\Modules\Documentation;
 
 use Respect\Validation\Validator as v;
 use Respect\Validation\Exceptions\ExceptionInterface;
@@ -23,23 +23,17 @@ class Validation
             // Rules
             switch ($rule)
             {
-                // Test rule
-                case 'test':
+                // form test
+                case 'formTest':
 
                     if ($method == 'POST') {
-                        $v->key('input3', v::stringType()->length(1, 2), true);
-                        $v->key('input2', v::noWhitespace()->notEmpty()->stringType()->length(1, 2));
+                        $v->key('numeric',  v::notEmpty()   ->numeric()     ->setName('szám mező'));
+                        $v->key('email',    v::notEmpty()   ->email()       ->setName('email cím'));
+                        $v->key('select1',  v::notEmpty()                   ->setName('legördülő mező'));
                     }
 
-                    break;
+                break;
 
-                // test2 rule
-                case 'test2':
-
-                    $v->key('input3', v::stringType()->length(1, 2), true);
-                    $v->key('input2', v::noWhitespace()->notEmpty()->stringType()->length(1, 2));
-
-                    break;
             }
 
             return $v->assert($body);

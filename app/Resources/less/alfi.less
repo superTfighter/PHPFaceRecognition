@@ -19,12 +19,27 @@ blockquote {
             overflow: hidden;
             border-radius: 5px;
 
-            .modal-header, .modal-footer {
-                background-color: #fff;
+            .modal-header, {
+                .modal-title {
+                    line-height: initial;
+                }
+                .close {
+                    padding: 1.25rem 1rem;
+                }
             }
             .modal-body {
                 background-color: #f4f6f9;
+                div.card:last-child {
+                    margin-bottom: 0;
+                }
             }
+            .modal-footer {
+                background-color: #fff;
+            }
+        }
+        .loader {
+            width: 100%;
+            text-align: center;
         }
     }
 }

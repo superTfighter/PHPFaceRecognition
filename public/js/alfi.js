@@ -524,6 +524,7 @@ function copyToClipboard(selector) {
 // Alfi alert based on toaster
 
 function alfi_alert(message, title = 'Figyelem', type = 'info', options = new Array() ) {
+    if (type == 'danger') type = 'error';
     toastr.options = {
         "positionClass": "toast-top-right",
         "timeOut": 1000

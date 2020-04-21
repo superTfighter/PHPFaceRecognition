@@ -111,6 +111,13 @@
                             <ul class="nav nav-treeview " style="display: block;">
 
                                 <li class="nav-item">
+                                    <a class="nav-link {{ is_active_path('documentation/alert') }}" href="{{ path_for('documentation_alert') }}">
+                                        <i class="far fa-fw fa-exclamation-triangle"></i>
+                                        <p>Alert</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link {{ is_active_path('documentation/url') }}" href="{{ path_for('documentation_url') }}">
                                         <i class="far fa-fw fa-link"></i>
                                         <p>URL</p>

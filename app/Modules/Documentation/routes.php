@@ -10,6 +10,8 @@ $app->get   ('/documentation/datatable-json',    '@Documentation\MainAction:data
 
 $app->get   ('/documentation/css-and-js',        '@Documentation\MainAction:cssJs' )                  ->setName('documentation_css_js');
 
+$app->get   ('/documentation/alert',             '@Documentation\MainAction:alert' )                    ->setName('documentation_alert');
+
 $app->get   ('/documentation/url',               '@Documentation\MainAction:url' )                    ->setName('documentation_url');
 $app->get   ('/documentation/url_test_ok',       '@Documentation\MainAction:urlTestOK' )               ->setName('documentation_url_test_ok');
 $app->get   ('/documentation/url_test_fail',     '@Documentation\MainAction:urlTestFail' )             ->setName('documentation_url_test_fail');

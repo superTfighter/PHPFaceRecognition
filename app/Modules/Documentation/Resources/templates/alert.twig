@@ -1,0 +1,165 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Documentation</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/php.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">Alert</h3>
+        </div>
+        <div class="card-body">
+            A jQuery toastr kiegészítőjére épülő figyelmeztető ablak. 1 másodperc után automatikusan eltűnik.<br>
+            <br>
+            Függvény neve: <code><b>alfi_alert()</b></code><br>
+            <br>
+
+            <h4>Argumentumok</h4>
+            <div class="form-group">
+                <table width="100%" border="0" cellpadding="10" class="attribs">
+                    <tr>
+                        <td>
+                            <code>1.</code>
+                        </td>
+                        <td>
+                            A megjelenítendő üzenet.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>2.</code>
+                        </td>
+                        <td>
+                            Ablak fejléce. Opcionális, alapból 'Figyelem'
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>3.</code>
+                        </td>
+                        <td>
+                            Az ablak típusa (<code>info, success, warning, error</code>). Opcionális, alapból <code>info</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td nowrap valign="top">
+                            <code>4.</code>
+                        </td>
+                        <td>
+                            További toaster beállítások objektumosan. Lásd a mintákat, valamint a toastr dokumentációt:
+                            <a href="https://www.javascripting.com/view/toastr" target="_blank">https://www.javascripting.com/view/toastr</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4>Minták</h4>
+
+            <div class="form-group">
+                <button id="button1" class="btn btn-primary">Info</button>
+                <button id="button2" class="btn btn-success">Success</button>
+                <button id="button3" class="btn btn-warning">Warning egyedi opciók</button>
+                <button id="button4" class="btn btn-danger">Danger/Error egyedi fejléc</button>
+                
+                <script>
+
+                    $('#button1').on('click', function() {
+                        alfi_alert('Ez egy info!');
+                    })
+
+                    $('#button2').on('click', function() {
+                        alfi_alert('Ez egy success!', 'Success title', 'success');
+                    })
+
+                    $('#button3').on('click', function() {
+                        alfi_alert('Ezt itt egy warning', 'Warning title', 'warning' );
+                    })
+
+                    $('#button4').on('click', function() {
+                        alfi_alert('Ez itt egy error', 'Error title', 'error', { "closeButton": true, "timeOut": 0 } );
+                    })
+
+                </script>
+            </div>
+
+            <div class="form-group">
+                <textarea id="example1" readonly>
+<button id="button1" class="btn btn-primary">Info</button>
+<button id="button2" class="btn btn-success">Success</button>
+<button id="button3" class="btn btn-warning">Warning egyedi fejléc</button>
+<button id="button4" class="btn btn-danger">Danger/Error egyedi opciók</button>
+
+<script>
+
+$('#button1').on('click', function() {
+    alfi_alert('Ez egy info!');
+})
+
+$('#button2').on('click', function() {
+    alfi_alert('Ez egy success!', 'Success title', 'success');
+})
+
+$('#button3').on('click', function() {
+    alfi_alert('Ezt itt egy warning', 'Warning title', 'warning' );
+})
+
+$('#button4').on('click', function() {
+    alfi_alert('Ez itt egy error', 'Error title', 'error', { "closeButton": true, "timeOut": 0 } );
+})
+
+</script></textarea>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1' ), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: "nocursor",
+    height: "auto"
+});   
+
+</script>
+
+{% endblock %}

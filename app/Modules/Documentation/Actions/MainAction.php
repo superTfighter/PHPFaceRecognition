@@ -47,6 +47,13 @@ class MainAction
         }
     }
 
+    // Alert
+
+    public function alert(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, '@Documentation/alert.twig');
+    }
+
     // URL
 
     public function url(Request $request, Response $response, $args)

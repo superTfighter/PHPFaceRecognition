@@ -4334,7 +4334,7 @@ html.maximized-card {
 
 .card-header > .card-tools {
   float: right;
-  margin-right: -0.625rem;
+  line-height: 30px;
 }
 
 .card-header > .card-tools .input-group,

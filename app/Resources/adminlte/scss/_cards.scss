@@ -174,7 +174,8 @@ html.maximized-card {
 
   > .card-tools {
     float: right;
-    margin-right: -$card-spacer-x / 2;
+    line-height: 30px;
+    // margin-right: -$card-spacer-x / 2;
 
     .input-group,
     .nav,

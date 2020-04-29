@@ -28,6 +28,7 @@ $container['view'] = function($container) {
 
     // Twig Specials Variables
     $view->getEnvironment()->addGlobal("cookie", @$_COOKIE);
-   
+    $view->getEnvironment()->addGlobal("dev_mode", $container->get('settings')['dev_mode']);
+
     return $view;
 };

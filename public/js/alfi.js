@@ -428,11 +428,17 @@ function app_load_init() {
         };
     }
 
-    // =======
-    // TOOLTIP
-    // =======
+    // =================
+    // TOOLTIP / POPOVER
+    // =================
 
     // Init
+
+    $('[data-tooltip]').tooltip({
+        title: function() {
+            return this.getAttribute('data-tooltip');
+        }
+    });
 
     $('[data-toggle="popover"]').popover({
         content: function() {

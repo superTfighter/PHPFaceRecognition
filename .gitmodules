@@ -1,0 +1,3 @@
+[submodule "public-assets"]
+    path = public
+    url = https://dev.niif.hu/lszabolcs/skeleton-assets

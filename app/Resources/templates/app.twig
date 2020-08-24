@@ -19,6 +19,9 @@
         <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/assets/adminlte/css/adminlte.min.css?{{ "now" | date("U") }}">
         <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/css/alfi.css?{{ "now" | date("U") }}">
     {% endif %}
+    <!-- DateTime -->
+    <!--link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css"-->
+    <link rel="stylesheet" href="assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
     <!-- Iconsets -->
     <link rel="stylesheet" href="assets/font-awesome5/css/all.min.css">
     <link rel="stylesheet" href="assets/font-awesome-animation/css/font-awesome-animation.min.css">
@@ -27,8 +30,8 @@
     <link rel="stylesheet" href="assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="assets/select2/css/select2.min.css">
     <link rel="stylesheet" href="assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    
     <link rel="stylesheet" href="assets/toastr/toastr.min.css">
-    <link rel="stylesheet" href="assets/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="css/app.css?{{ mtime('css/app.css') }}">
     <style id="js-redefined-classes"></style>
 
@@ -45,14 +48,17 @@
         <script src="//dev.alfi.niif.hu/skeleton2/assets/adminlte/js/adminlte.min.js?{{ "now" | date("U") }}"></script>
     {% endif %}
     <script src="assets/moment/moment.min.js"></script>
-    <script src="assets/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="assets/moment/locale/hu.js"></script>
+    <!--script src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script-->
+    <!--script src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.hu.min.js"></script-->
+    <script src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script src="assets/bootstrap-confirmation/bootstrap-confirmation.min.js"></script>
     <script src="assets/pace/js/pace.min.js"></script>
     <script src="assets/toastr/toastr.min.js"></script>
     <script src="assets/datatables/jquery.dataTables.min.js"></script>
     <script src="assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-    <script src="assets/select2/js/select2.min.js"></script>
+    <script src="assets/select2/js/select2.full.js"></script>
     <script src="js/app.js?{{ mtime('js/app.js') }}"></script>
     <!-- ALFI scripts -->
     {% if dev_mode %}
@@ -138,23 +144,37 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/url') }}" href="{{ path_for('documentation_url') }}">
+                                    <a class="nav-link {{ is_active_path('documentation/ajax_url') }}" href="{{ path_for('documentation_ajax_url') }}">
                                         <i class="far fa-fw fa-link"></i>
-                                        <p>URL</p>
+                                        <p>ajax-url</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/modal') }}" href="{{ path_for('documentation_modal') }}">
+                                    <a class="nav-link {{ is_active_path('documentation/ajax_modal') }}" href="{{ path_for('documentation_ajax_modal') }}">
                                         <i class="far fa-fw fa-window"></i>
-                                        <p>Modal</p>
+                                        <p>ajax-modal</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/form') }}" href="{{ path_for('documentation_form') }}">
+                                    <a class="nav-link {{ is_active_path('documentation/bb') }}" href="{{ path_for('documentation_bb') }}">
+                                        <i class="far fa-fw fa-window"></i>
+                                        <p>BlurBox</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active_path('documentation/ajax_form') }}" href="{{ path_for('documentation_ajax_form') }}">
                                         <i class="far fa-fw fa-edit"></i>
-                                        <p>Form</p>
+                                        <p>ajax-form</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active_path('documentation/datetimepicker') }}" href="{{ path_for('documentation_datetimepicker') }}">
+                                        <i class="far fa-fw fa-calendar"></i>
+                                        <p>Date-, DateTimePicker</p>
                                     </a>
                                 </li>
 

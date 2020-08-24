@@ -40,7 +40,7 @@
 
     <div class="card">
         <div class="card-header with-border">
-            <h3 class="card-title">URL</h3>
+            <h3 class="card-title">ajax-url</h3>
         </div>
         <div class="card-body">
             Ajax link megnyitása és feldolgozása. Amennyiben tag-en belül található font-awesome ikon az a betöltés idejére egy spinnere cserélődik.<br>
@@ -91,10 +91,10 @@
             <h4>Minták</h4>
 
             <div class="form-group">
-                <a href="{{ path_for('documentation_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+                <a href="{{ path_for('documentation_ajax_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
                     Ajax URL 1 (Sikeres teszt)
                 </a>
-                <a href="{{ path_for('documentation_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+                <a href="{{ path_for('documentation_ajax_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
                     <i class="fa fa-fw fas fa-poo"></i> Ajax URL 1 (Sikertelen teszt)
                 </a>
 
@@ -118,11 +118,11 @@
 
             <div class="form-group">
                 <textarea id="example1" readonly>
-<a href="{{ path_for('documentation_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+<a href="{{ path_for('documentation_ajax_url_test_ok') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
     Ajax URL 1 (Sikeres teszt)
 </a>
 
-<a href="{{ path_for('documentation_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
+<a href="{{ path_for('documentation_ajax_url_test_fail') }}" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-url btn btn-primary">
     <i class="fa fas fa-smile"></i> Ajax URL 1 (Sikertelen teszt)
 </a>
 
@@ -183,20 +183,20 @@
             <h4>Minták</h4>
 
             <div class="form-group">
-                <a href="{{ path_for('documentation_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+                <a href="{{ path_for('documentation_ajax_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
                     <i class="fa fa-fw fa-question-circle"></i> Ajax megerősítéses URL (Sikeres teszt)
                 </a>
-                <a href="{{ path_for('documentation_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+                <a href="{{ path_for('documentation_ajax_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
                     <i class="fa fa-fw fa-poo"></i> Ajax megerősítéses URL (Sikertelen teszt)
                 </a>
             </div>
 
             <div class="form-group">
                 <textarea id="example4" readonly>
-<a href="{{ path_for('documentation_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+<a href="{{ path_for('documentation_ajax_url_test_ok') }}" data-title="Megerősítés fejléc" data-content="Ez sikeres lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
     <i class="fa fa-fw fa-question-circle"></i> Ajax megerősítéses URL (Sikeres teszt)
 </a>
-<a href="{{ path_for('documentation_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
+<a href="{{ path_for('documentation_ajax_url_test_fail') }}" data-title="Megerősítés fejléc" data-content="Ez <b class='text-red'>sikertelen</b> lesz" data-ajax-success-fn="ajax_url_ok" data-ajax-fail-fn="ajax_url_fail" class="ajax-confirmation-url btn btn-primary">
     <i class="fa fa-fw fa-poo"></i> Ajax megerősítéses URL (Sikertelen teszt)
 </a></textarea>
             </div>
@@ -212,25 +212,25 @@
 CodeMirror.fromTextArea( document.getElementById('example1' ), {
     lineNumbers: true,
     mode: "xml",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });   
 CodeMirror.fromTextArea( document.getElementById('example2'), {
     lineNumbers: true,
     mode: "xml",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });
 CodeMirror.fromTextArea( document.getElementById('example3'), {
     lineNumbers: true,
     mode: "php",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });
 CodeMirror.fromTextArea( document.getElementById('example4'), {
     lineNumbers: true,
     mode: "php",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });
 

@@ -14,14 +14,26 @@ class MainAction
 {
 	use CoreTrait;
 
-    // Form
+    // Home
 
-    public function form(Request $request, Response $response, $args)
+    public function home(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, '@Documentation/form.twig');
+        return $this->view->render($response, '@Documentation/home.twig');
     }
 
-    public function formTest(Request $request, Response $response, $args)
+    // Form
+
+    public function dateTimePicker(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, '@Documentation/datetimepicker.twig');
+    }
+
+    public function ajax_form(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, '@Documentation/ajax_form.twig');
+    }
+
+    public function ajax_formTest(Request $request, Response $response, $args)
     {
         $parsedBody = $request->getParsedBody();
         $method     = $request->getMethod();
@@ -56,17 +68,17 @@ class MainAction
 
     // URL
 
-    public function url(Request $request, Response $response, $args)
+    public function ajax_url(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, '@Documentation/url.twig');
+        return $this->view->render($response, '@Documentation/ajax_url.twig');
     }
 
-    public function urlTestOK(Request $request, Response $response, $args)
+    public function ajax_urlTestOK(Request $request, Response $response, $args)
     {
         return $response->write('Sikeres válasz, de ez nem JSON!', 200);
     }
 
-    public function urlTestFail(Request $request, Response $response, $args)
+    public function ajax_urlTestFail(Request $request, Response $response, $args)
     {
         sleep(3);
         return $response->withJson([
@@ -76,12 +88,12 @@ class MainAction
 
     // MODAL
 
-    public function modal(Request $request, Response $response, $args)
+    public function ajax_modal(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, '@Documentation/modal.twig');
+        return $this->view->render($response, '@Documentation/ajax_modal.twig');
     }
 
-    public function modalTest(Request $request, Response $response, $args)
+    public function ajax_modalTest(Request $request, Response $response, $args)
     {
         sleep(1);
 
@@ -89,20 +101,38 @@ class MainAction
             'kutya', 'macska', 'borz'
         );
 
-        return $this->view->render($response, '@Documentation/modal/modal_test.twig', ['data' => $data]); 
+        return $this->view->render($response, '@Documentation/modal/ajax_modal_test.twig', ['data' => $data]); 
     }
 
-    public function modalTestJSON(Request $request, Response $response, $args)
+    public function ajax_modalTestJSON(Request $request, Response $response, $args)
     {
         $data = array(
             'kutya', 'macska', 'borz'
         );
 
         return $response->withJson([
-            'modal-title'  => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'title'),
-            'modal-body'   => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'body', ['data' => $data]),
-            'modal-footer' => $this->view->fetchBlock('@Documentation/modal/modal_test_json.twig', 'footer')
+            'modal-title'  => $this->view->fetchBlock('@Documentation/modal/ajax_modal_test_json.twig', 'title'),
+            'modal-body'   => $this->view->fetchBlock('@Documentation/modal/ajax_modal_test_json.twig', 'body', ['data' => $data]),
+            'modal-footer' => $this->view->fetchBlock('@Documentation/modal/ajax_modal_test_json.twig', 'footer')
         ], 200);
+    }
+
+    // BLURBOX
+
+    public function bb(Request $request, Response $response, $args)
+    {
+        return $this->view->render($response, '@Documentation/bb.twig');
+    }
+
+    public function bbTest(Request $request, Response $response, $args)
+    {
+        sleep(1);
+
+        $data = array(
+            'kutya', 'macska', 'borz'
+        );
+
+        return $this->view->render($response, '@Documentation/modal/ajax_bb_test.twig', ['data' => $data]); 
     }
 
     // DATATABLE
@@ -120,6 +150,8 @@ class MainAction
 
     public function datatableJSONResponse(Request $request, Response $response, $args)
     {
+        sleep(20);
+
         return $response->withJson([
             "recordsTotal"    => 123,
             "recordsFiltered" => 123,

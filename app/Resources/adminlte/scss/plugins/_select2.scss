@@ -211,6 +211,46 @@
   }
 }
 
+
+/* NOTE: Lovi */
+.form-group {
+  &.form-group-sm {
+    .select2-container .select2-selection {
+      height: $input-height-sm !important;
+      font-size: $font-size-sm;
+      .select2-selection__rendered {
+        line-height: $input-height-sm;
+        .select2-selection__clear {
+          margin-top : .47em;
+          line-height: 1em;
+        }
+      }
+    }
+  }
+  .select2-container .select2-selection {
+    .select2-selection__rendered {
+      color: #495057;
+      font-size: 1rem;
+      .select2-selection__clear {
+        line-height     : 1.10em;
+        margin-top      : .6em;
+        background-color: transparent;
+        color           : transparent;
+
+        &:before {
+          content    : "\f057";
+          font-family: "Font Awesome 5 Pro";
+          font-weight: 400;
+          color      : #989ea2;
+        }
+        &:hover:before {
+          color           : #000;
+        }
+      }
+    }
+  }
+}
+
 // Background colors (theme colors)
 @each $name, $color in $theme-colors {
   @include select2-variant($name, $color);

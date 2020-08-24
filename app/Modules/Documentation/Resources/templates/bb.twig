@@ -1,0 +1,294 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Documentation</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/php.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+
+    .modal-spec {
+        background: rgba(0,0,0,0.75);
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">BlurBox</h3>
+        </div>
+        <div class="card-body">
+            A BlurBox egy olyan előugró ablak, amit akkor érdemes használni, ha több elem részletes adatait szeretnénk megjeleníteni, úgy, hogy közben ne veszítsük el z elemeket.<br>
+            Például egy felhasználó listában egy vagy több ember részletes adatait akarjuk megnézni.<br>
+            Ilyenkor a modal zavaró a működéséből adódóan.
+            <br><br>
+
+            <h4>Példa</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 20px;">#</th>
+                        <th>Felhasználó</th>
+                        <th style="width: 20px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <a href="#" style="cursor: pointer;" class="bb-item">Felhasználó Első</a>
+                            <div class="d-none">
+                                <div class="card">
+                                    <div class="card-header with-border">
+                                        <h3 class="card-title"><i class="far fa-info-circle"></i> Eszköz adatok</h3>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Eszköz ID
+                                                <span class="float-right"><b>10217</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                hostnév
+                                                <span class="float-right"><b>rtr1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                sorozatszám
+                                                <span class="float-right"><b>FCZ1729C2C8</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                tulajdonos
+                                                <span class="float-right"><b>kifu</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                felhasználás
+                                                <span class="float-right"><b>SuliNET,EFOP324</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Audit
+                                                <span class="float-right"><b>igen</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                DROPS
+                                                <span class="float-right"><b style="color: #006600">engedélyezve</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Választott tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Aktív tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger">
+                                <i class="fal fa-fw fa-trash-alt"></i>
+                            </button
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <a href="#" style="cursor: pointer;" class="bb-item">Második versenyző</a>
+                            <div class="d-none">
+                                <div class="card">
+                                    <div class="card-header with-border">
+                                        <h3 class="card-title"><i class="far fa-info-circle"></i> Eszköz adatok</h3>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Eszköz ID
+                                                <span class="float-right"><b>10217</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                hostnév
+                                                <span class="float-right"><b>rtr1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                sorozatszám
+                                                <span class="float-right"><b>FCZ1729C2C8</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                tulajdonos
+                                                <span class="float-right"><b>kifu</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                felhasználás
+                                                <span class="float-right"><b>SuliNET,EFOP324</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Audit
+                                                <span class="float-right"><b>igen</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                DROPS
+                                                <span class="float-right"><b style="color: #006600">engedélyezve</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Választott tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Aktív tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger">
+                                <i class="fal fa-fw fa-trash-alt"></i>
+                            </button
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <a href="#" style="cursor: pointer;" class="bb-item">Sokadik emberke</a>
+                            <div class="d-none">
+                                <div class="card">
+                                    <div class="card-header with-border">
+                                        <h3 class="card-title"><i class="far fa-info-circle"></i> Eszköz adatok</h3>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Eszköz ID
+                                                <span class="float-right"><b>10217</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                hostnév
+                                                <span class="float-right"><b>rtr1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                sorozatszám
+                                                <span class="float-right"><b>FCZ1729C2C8</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                tulajdonos
+                                                <span class="float-right"><b>kifu</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                felhasználás
+                                                <span class="float-right"><b>SuliNET,EFOP324</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Audit
+                                                <span class="float-right"><b>igen</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                DROPS
+                                                <span class="float-right"><b style="color: #006600">engedélyezve</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Választott tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Aktív tűzfalcsomag
+                                                <span class="float-right"><b>security1</b></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger">
+                                <i class="fal fa-fw fa-trash-alt"></i>
+                            </button
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <h4>Minták</h4>
+            <div class="form-group">
+                <textarea id="example1" readonly>
+blurbox.render(
+    'FEJLÉC', // A fejléc lehet szöveg, vagyegy element $(this).find('.részletek'), vagy ezek kombinációja tömbben
+    'BODY'    // A body felépítése a fejlécével megegyezik. pl: ['egy kis adat', $('.még-egy-kis-adat')]
+);</textarea>
+            </div>
+
+            Az ajax változat a modal-hoz használt JSON strukturával működik, a footert viszont nem használja fel.
+            <div class="form-group">
+                <textarea id="example2" readonly>
+<a class="ajax-blurbox" href="path_for...">gomb</a></textarea>
+             </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1'), {
+    lineNumbers: true,
+    readOnly   : true,
+    height     : "auto",
+    mode       : "javascript",
+});
+
+CodeMirror.fromTextArea( document.getElementById('example2' ), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: true,
+    height: "auto"
+});   
+
+$(function () {
+    $('.bb-item').on('click', function() {
+
+        blurbox.render(
+            '<h4 style="font-size: 2.2rem;font-weight: 600;">'+ $(this).text() +'</h4>',
+            $(this).closest('td').find('.card')
+        );
+        return false;
+
+    })
+})
+
+</script>
+
+{% endblock %}

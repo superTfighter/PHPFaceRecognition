@@ -374,10 +374,16 @@
   line-height: 1.1;
   margin: 0;
   padding: 10px;
+  cursor: pointer;
 }
 
 .timeline > div > .timeline-item > .timeline-header > a {
   font-weight: 600;
+}
+
+.timeline > div > .timeline-item > .timeline-info {
+  padding: 10px;
+  background: #f5f5f5;
 }
 
 .timeline > div > .timeline-item > .timeline-body,

@@ -41,7 +41,7 @@
         ]
 
         $container.append(
-            '<h5>Customize AdminLTE</h5><hr class="mb-2"/>'
+            '<h5>Oldal testreszabása</h5><hr class="mb-2"/>'
         )
 
         var $text_sm_body_checkbox = $('<input />', {
@@ -54,9 +54,10 @@
             app_theme.set($(this).attr('name'), $(this).is(':checked'));
             $('body').toggleClass('text-sm', $(this).is(':checked'));
         })
-        var $text_sm_body_container = $('<div />', {
-            'class': 'mb-1'
-        }).append($text_sm_body_checkbox).append('<span>Body small text</span>')
+        var $text_sm_body_container = $('<label />', {
+            'class': 'mb-1',
+            'style': 'font-weight: 400; color: inherit;',
+        }).append($text_sm_body_checkbox).append('<span>Kis alap betűméret</span>')
         $container.append($text_sm_body_container)
 
         var $text_sm_sidebar_checkbox = $('<input />', {
@@ -69,9 +70,10 @@
             app_theme.set($(this).attr('name'), $(this).is(':checked'));
             $('.nav-sidebar').toggleClass('text-sm', $(this).is(':checked'));
         })
-        var $text_sm_sidebar_container = $('<div />', {
-            'class': 'mb-1'
-        }).append($text_sm_sidebar_checkbox).append('<span>Sidebar nav small text</span>')
+        var $text_sm_sidebar_container = $('<label />', {
+            'class': 'mb-1',
+            'style': 'font-weight: 400; color: inherit;',
+        }).append($text_sm_sidebar_checkbox).append('<span>Oldalmenü kis betűméret</span>')
         $container.append($text_sm_sidebar_container)
 
         var $flat_sidebar_checkbox = $('<input />', {
@@ -84,9 +86,10 @@
             app_theme.set($(this).attr('name'), $(this).is(':checked'));
             $('.nav-sidebar').toggleClass('nav-flat', $(this).is(':checked'));
         })
-        var $flat_sidebar_container = $('<div />', {
-            'class': 'mb-1'
-        }).append($flat_sidebar_checkbox).append('<span>Sidebar nav flat style</span>')
+        var $flat_sidebar_container = $('<label />', {
+            'class': 'mb-1',
+            'style': 'font-weight: 400; color: inherit;',
+        }).append($flat_sidebar_checkbox).append('<span>Oldalmenü flat stílus</span>')
         $container.append($flat_sidebar_container)
 
         var $legacy_sidebar_checkbox = $('<input />', {
@@ -99,9 +102,10 @@
             app_theme.set($(this).attr('name'), $(this).is(':checked'));
             $('.nav-sidebar').toggleClass('nav-legacy', $(this).is(':checked'));
         })
-        var $legacy_sidebar_container = $('<div />', {
-            'class': 'mb-1'
-        }).append($legacy_sidebar_checkbox).append('<span>Sidebar nav legacy style</span>')
+        var $legacy_sidebar_container = $('<label />', {
+            'class': 'mb-1',
+            'style': 'font-weight: 400; color: inherit;',
+        }).append($legacy_sidebar_checkbox).append('<span>Oldalmenü klasszikus stílus</span>')
         $container.append($legacy_sidebar_container)
 
         var $compact_sidebar_checkbox = $('<input />', {
@@ -114,9 +118,10 @@
             app_theme.set($(this).attr('name'), $(this).is(':checked'));
             $('.nav-sidebar').toggleClass('nav-compact', $(this).is(':checked'));
         })
-        var $compact_sidebar_container = $('<div />', {
-            'class': 'mb-1'
-        }).append($compact_sidebar_checkbox).append('<span>Sidebar nav compact</span>')
+        var $compact_sidebar_container = $('<label />', {
+            'class': 'mb-1',
+            'style': 'font-weight: 400; color: inherit;',
+        }).append($compact_sidebar_checkbox).append('<span>Oldalmenü kompakt méret</span>')
         $container.append($compact_sidebar_container)
 
         var sidebar_colors = [
@@ -158,6 +163,7 @@
         ]
 
         var sidebar_skins = [
+            'sidebar-dark-secondary',
             'sidebar-dark-primary',
             'sidebar-dark-warning',
             'sidebar-dark-info',
@@ -192,7 +198,7 @@
             'sidebar-light-olive'
         ]
 
-        $container.append('<br><h6>Navbar Variants</h6>')
+        $container.append('<br><br><h6>Színsémák</h6>')
 
         var $navbar_variants = $('<div />', {
             'class': 'd-flex'
@@ -203,9 +209,6 @@
 
             var color = $(e).data('color');
 
-            // Redefining primary color
-            redefinePrimaryColors(color);
-
             // Navbar
             var $main_header = $('.main-header');
             $main_header/*.removeClass('navbar-dark')*/.removeClass('navbar-light');
@@ -214,7 +217,10 @@
             })
             // $main_header.toggleClass('navbar-dark', navbar_dark_skins.indexOf(color) > -1);
 
-            $main_header.addClass(color)
+            $main_header.addClass(color);
+
+            // Redefining primary color
+            redefinePrimaryColors(color);
 
             // Logo
             var $logo = $('.brand-link')
@@ -287,11 +293,19 @@
 
 function redefinePrimaryColors(color) {
 
-    let tempClassName = 'temp-class-g8rw374grt834';
-    $('#'+ tempClassName).addClass(color);
-    let realColor = $('#'+ tempClassName).css('background-color');
+    let realColor = null;
+    if ($('.main-header').length) {
+        realColor = $('.main-header').css('background-color');
+    }
+
+    realColor = realColor.substr(4, realColor.length - 5);
+    // var parsedHex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(realColor);
+    // realColor = parsedHex ? ( parseInt(parsedHex[1], 16) +', '+ parseInt(parsedHex[2], 16) +', '+ parseInt(parsedHex[3], 16) ) : '0, 123, 255';
 
     $('#js-redefined-classes').html(`
+    :root {
+        --main-color: ${realColor};
+    }
     .card.card-primary > .card-header,
     .bg-primary {
         background-color: ${realColor} !important;

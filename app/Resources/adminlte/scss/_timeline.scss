@@ -3,20 +3,20 @@
 //
 
 .timeline {
-  margin: 0 0 45px;
-  padding: 0;
+  margin  : 0 0 45px;
+  padding : 0;
   position: relative;
   // The line
   &::before {
     @include border-radius($border-radius);
     background: $gray-300;
-    bottom: 0;
-    content: '';
-    left: 31px;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    width: 4px;
+    bottom    : 0;
+    content   : '';
+    left      : 31px;
+    margin    : 0;
+    position  : absolute;
+    top       : 0;
+    width     : 4px;
   }
   // Element
   > div {
@@ -33,32 +33,38 @@
     > .timeline-item {
       @include box-shadow($card-shadow);
       @include border-radius($border-radius);
-      background: $white;
-      color: $gray-700;
-      margin-left: 60px;
+      background  : $white;
+      color       : $gray-700;
+      margin-left : 60px;
       margin-right: 15px;
-      margin-top: 0;
-      padding: 0;
-      position: relative;
+      margin-top  : 0;
+      padding     : 0;
+      position    : relative;
       // The time and header
       > .time {
-        color: #999;
-        float: right;
+        color    : #999;
+        float    : right;
         font-size: 12px;
-        padding: 10px;
+        padding  : 10px;
       }
       // Header
       > .timeline-header {
         border-bottom: 1px solid $card-border-color;
-        color: $gray-700;
-        font-size: 16px;
-        line-height: 1.1;
-        margin: 0;
-        padding: 10px;
+        color        : $gray-700;
+        font-size    : 16px;
+        line-height  : 1.1;
+        margin       : 0;
+        padding      : 10px;
+        cursor       : pointer;
         // Link in header
         > a {
           font-weight: 600;
         }
+      }
+      // Item info
+      > .timeline-info {
+        padding   : 10px;
+        background: #f5f5f5;
       }
       // Item body and footer
       > .timeline-body,
@@ -88,16 +94,16 @@
     > .fab,
     > .glyphicon,
     > .ion {
-      background: $gray-500;
+      background   : $gray-500;
       border-radius: 50%;
-      font-size: 15px;
-      height: 30px;
-      left: 18px;
-      line-height: 30px;
-      position: absolute;
-      text-align: center;
-      top: 0;
-      width: 30px;
+      font-size    : 15px;
+      height       : 30px;
+      left         : 18px;
+      line-height  : 30px;
+      position     : absolute;
+      text-align   : center;
+      top          : 0;
+      width        : 30px;
     }
   }
   // Time label

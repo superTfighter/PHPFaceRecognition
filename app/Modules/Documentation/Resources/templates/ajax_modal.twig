@@ -44,7 +44,7 @@
 
     <div class="card">
         <div class="card-header with-border">
-            <h3 class="card-title">Modal</h3>
+            <h3 class="card-title">ajax-modal</h3>
         </div>
         <div class="card-body">
             Modal nyitása és feltöltése XMLHttpRequest tartalommal.<br>
@@ -89,11 +89,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td nowrap>
+                        <td nowrap valign="top">
                             <code>data-modal-dialog-class</code>
                         </td>
                         <td>
-                            A modal skeletonjában <code>modal-dialog</code> class-t tartalmzó <code>div</code>-re felkerül az attribútumban megadott class.
+                            A modal skeletonjában <code>modal-dialog</code> class-t tartalmzó <code>div</code>-re felkerül az attribútumban megadott class. A gyári <code>modal-xl</code> egy nagyobb változatra lett módosítva. Így a gyárilag megegyező <code>modal-lg</code> és <code>modal-xl</code> nálunk különböző méretet ad.
                         </td>
                     </tr>
                 </table>
@@ -102,8 +102,8 @@
             <h4>Minták</h4>
 
             <div class="form-group">
-                <a href="{{ path_for('documentation_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal</a>
-                <a href="{{ path_for('documentation_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">Ajax modal with JSON</a>
+                <a href="{{ path_for('documentation_ajax_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">Ajax modal</a>
+                <a href="{{ path_for('documentation_ajax_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">Ajax modal with JSON</a>
             </div>
 
             <div class="form-group">
@@ -114,10 +114,10 @@
     }
 </style>
 
-<a href="{{ path_for('documentation_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">
+<a href="{{ path_for('documentation_ajax_modal_test') }}" data-modal-title="Test 1" class="ajax-modal btn btn-primary">
     Ajax modal
 </a>
-<a href="{{ path_for('documentation_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">
+<a href="{{ path_for('documentation_ajax_modal_test_json') }}" data-modal-class="modal-spec" data-modal-dialog-class="modal-lg" class="ajax-modal btn btn-primary">
     Ajax modal with JSON
 </a></textarea>
              </div>
@@ -151,13 +151,13 @@
 CodeMirror.fromTextArea( document.getElementById('example1' ), {
     lineNumbers: true,
     mode: "xml",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });   
 CodeMirror.fromTextArea( document.getElementById('example2'), {
     lineNumbers: true,
     mode: "xml",
-    readOnly: "nocursor",
+    readOnly: true,
     height: "auto"
 });
 

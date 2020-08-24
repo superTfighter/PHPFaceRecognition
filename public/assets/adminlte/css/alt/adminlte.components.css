@@ -5142,9 +5142,18 @@ html.maximized-card {
   color: #444;
 }
 
-.btn-default:hover, .btn-default:active, .btn-default.hover {
+.btn-default:hover, .btn-default:active, .btn-default:focus, .btn-default.hover {
   background-color: #e9ecef;
   color: #2b2b2b;
+  border-color: #c4c4c4;
+}
+
+.show > .btn-default.dropdown-toggle,
+.btn-default:not(:disabled):not(.disabled):active,
+.btn-default:not(:disabled):not(.disabled).active {
+  background-color: #dae0e5;
+  color: #111111;
+  border-color: #aaaaaa;
 }
 
 .btn-app {

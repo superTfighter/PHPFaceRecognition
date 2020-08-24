@@ -1,0 +1,125 @@
+{% extends 'app.twig' %}
+
+{% block include_stylesheets %}{% endblock %}
+{% block include_javascripts %}{% endblock %}
+
+{% block pageheader %} 
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="./">Skeleton</a>
+        <span class="breadcrumb-item active">Documentation</span>
+    </nav>
+{% endblock %}
+                
+{% block head %}
+
+
+  <script src="assets/codemirror/js/codemirror.js"></script>
+  <script src="assets/codemirror/js/mode/xml.js"></script>
+  <script src="assets/codemirror/js/mode/php.js"></script>
+  <link rel="stylesheet" href="assets/codemirror/css/codemirror.css">
+
+  <style>
+    .CodeMirror{
+        border: 1px solid #ddd;
+        height: auto;
+    }
+    table.attribs {
+        border: 1px solid #ddd;
+    }
+    table.attribs tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table.attribs tr td {
+        font-weight: normal;
+    }
+  </style>
+
+{% endblock %}
+            
+{% block body_content %}
+
+    <div class="card">
+        <div class="card-header with-border">
+            <h3 class="card-title">Date-, DateTimePicker</h3>
+        </div>
+        <div class="card-body no-margin-bottom">
+
+            <h4>Minta</h4>
+
+            <div class="form-group">
+                <label>Dátum</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-calendar"></i></span>
+                    </div>
+                    <input type="text" class="form-control" name="date" value=""/>
+                </div>
+                <script>
+                    $("[name=date]").datetimepicker({
+                        format: 'YYYY.MM.DD.',
+                    });
+                </script>
+            </div>
+
+            <div class="form-group">
+                <label>Ideje</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-calendar"></i></span>
+                    </div>
+                    <input name="datetime" type="text" class="form-control" value=""/>
+                </div>
+                <script>
+                    $("[name=datetime]").datetimepicker();
+                </script>
+            </div>
+
+            <div class="form-group">
+                <textarea id="example1" readonly>
+<div class="form-group">
+    <label>Dátum</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-calendar"></i></span>
+        </div>
+        <input type="text" class="form-control" name="date" value=""/>
+    </div>
+    <script>
+        $("[name=date]").datetimepicker({
+            format: 'YYYY.MM.DD.',
+        });
+    </script>
+</div>
+
+<div class="form-group">
+    <label>Ideje</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-calendar"></i></span>
+        </div>
+        <input name="datetime" type="text" class="form-control" value=""/>
+    </div>
+    <script>
+        $("[name=datetime]").datetimepicker();
+    </script>
+</div>
+</textarea>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body_tail %}
+<script>
+
+CodeMirror.fromTextArea( document.getElementById('example1' ), {
+    lineNumbers: true,
+    mode: "xml",
+    readOnly: true,
+    height: "auto"
+});   
+
+</script>
+
+{% endblock %}

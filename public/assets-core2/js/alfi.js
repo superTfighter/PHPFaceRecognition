@@ -549,8 +549,9 @@ function app_load_init() {
     // ====================
     $(window).click(e => blurbox.close());
     $(window).keyup(e => {
-        if (e.key === "Escape")
+        if (e.key === "Escape") {
             blurbox.close();
+        }
     });
     $('.ajax-blurbox').unbind('click');
     $('.ajax-blurbox').click(event => event.stopPropagation());

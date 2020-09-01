@@ -12,13 +12,8 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Theme style -->
-    {% if dev_mode %}
-        <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/assets/adminlte/css/adminlte.min.css?{{ "now" | date("U") }}">
-        <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/css/alfi.css?{{ "now" | date("U") }}">
-    {% else %}
-        <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/assets/adminlte/css/adminlte.min.css?{{ "now" | date("U") }}">
-        <link rel="stylesheet" href="//dev.alfi.niif.hu/skeleton2/css/alfi.css?{{ "now" | date("U") }}">
-    {% endif %}
+    <link rel="stylesheet" href="skeleton-assets/adminlte/css/adminlte.min.css?{{ mtime('skeleton-assets/adminlte/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="skeleton-assets/css/alfi.css?{{ mtime('skeleton-assets/css/alfi.css') }}">
     <!-- DateTime -->
     <!--link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css"-->
     <link rel="stylesheet" href="assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
@@ -39,14 +34,9 @@
     <script src="assets/jquery/jquery.min.js"></script>
     <script src="assets/jquery-ui/jquery-ui.min.js"></script>
     <script src="assets/jquery-cookie/jquery.cookie.js"></script>
-    {% if dev_mode %}
-        {# A bootstrap-confirmation.js miatt van itt ez a blokk #}
-        <script src="//dev.alfi.niif.hu/skeleton2/assets/bootstrap/js/bootstrap.bundle.min.js?{{ "now" | date("U") }}"></script>
-        <script src="//dev.alfi.niif.hu/skeleton2/assets/adminlte/js/adminlte.min.js?{{ "now" | date("U") }}"></script>
-    {% else %}
-        <script src="//dev.alfi.niif.hu/skeleton2/assets/bootstrap/js/bootstrap.bundle.min.js?{{ "now" | date("U") }}"></script>
-        <script src="//dev.alfi.niif.hu/skeleton2/assets/adminlte/js/adminlte.min.js?{{ "now" | date("U") }}"></script>
-    {% endif %}
+    {# A bootstrap-confirmation.js miatt van itt ez a blokk #}
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js?{{ mtime('skeleton-assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="skeleton-assets/adminlte/js/adminlte.min.js?{{ mtime('skeleton-assets/adminlte/js/adminlte.min.js') }}"></script>
     <script src="assets/moment/moment.min.js"></script>
     <script src="assets/moment/locale/hu.js"></script>
     <!--script src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script-->
@@ -61,14 +51,8 @@
     <script src="assets/select2/js/select2.full.js"></script>
     <script src="js/app.js?{{ mtime('js/app.js') }}"></script>
     <!-- ALFI scripts -->
-    {% if dev_mode %}
-        {# Az alfi.js miatt van itt ez a blokk #}
-        <script src="//dev.alfi.niif.hu/skeleton2/js/alfi.js?{{ "now" | date("U") }}"></script>
-        <script src="//dev.profile.niif.hu/app/app.js?app_id={{ appcenter_app_id }}&token={{ appcenter_token }}"></script>
-    {% else %}
-        <script src="//dev.alfi.niif.hu/skeleton2/js/alfi.js?{{ "now" | date("U") }}"></script>
-        <script src="//profile.kifu.niif.hu/app/app.js?app_id={{ appcenter_app_id }}&token={{ appcenter_token }}"></script>
-    {% endif %}
+    <script src="skeleton-assets/js/alfi.js?{{ mtime('skeleton-assets/js/alfi.js') }}"></script>
+    <script src="//dev.profile.niif.hu/app/app.js?app_id={{ appcenter_app_id }}&token={{ appcenter_token }}"></script>
 
     {% block head %} {% endblock %}
 

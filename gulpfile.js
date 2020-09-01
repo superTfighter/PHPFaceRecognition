@@ -14,7 +14,6 @@ var onError = function(err) {
 gulp.task('build', function(){
 
     gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('public/skeleton-assets/bootstrap/css'));
-    gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js').pipe(gulp.dest('public/skeleton-assets/bootstrap/js'));
 
 });
 
@@ -25,6 +24,7 @@ gulp.task('build-full', function(){
     gulp.src('bower_components/jquery-ui/themes/base/jquery-ui.min.css').pipe(gulp.dest('public/skeleton-assets/jquery-ui/css'));
     gulp.src('bower_components/jquery-ui/jquery-ui.min.js').pipe(gulp.dest('public/skeleton-assets/jquery-ui/js'));
 
+    gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js').pipe(gulp.dest('public/skeleton-assets/bootstrap/js'));
 
     gulp.src('bower_components/jquery.cookie/jquery.cookie.js').pipe(gulp.dest('public/skeleton-assets'));
 

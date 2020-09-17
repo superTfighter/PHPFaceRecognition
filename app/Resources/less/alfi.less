@@ -93,17 +93,20 @@ blockquote {
     width: 800px !important;
 }
 
-.table.dataTable tbody td {
-    padding: .4rem .6rem;
-}
 .table.compact.dataTable tbody td {
     max-width: 100px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
 .table.compact.dataTable tbody tr.open td {
     white-space: inherit;
+}
+.table:not(.table-dark) {
+    color: #404549;
 }
 
 table tr.faded {
@@ -123,7 +126,16 @@ table tbody td.tdsmall {
     transform-origin: right top;
 }
 .table.dataTable tbody td {
-    padding: .4rem .6rem;
+    padding: .5rem .6rem;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .02);
+}
+.table-hover tbody tr:nth-of-type(odd):hover {
+    background-color: rgba(0, 0, 0, .05);
+}
+.table td, .table th {
+    border-top: 1px solid rgba(222, 226, 230, .5);
 }
 .table.table-oneline.dataTable > tbody > tr > td {
     max-width: 100px;

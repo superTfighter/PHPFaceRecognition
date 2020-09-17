@@ -2,6 +2,7 @@
 
 use ALFI\Config;
 use ALFI\Api\IIRApi;
+use ALFI\Api\GeneralApi;
 
 // API (core library)
 $container['api'] = function ($container) {

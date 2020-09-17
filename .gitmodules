@@ -1,6 +1,6 @@
-[submodule "public/assets-core"]
-	path = public/assets-core
-	url = git@dev.niif.hu:ALFI/skeleton-assets.git
 [submodule "public/skeleton-assets"]
 	path = public/skeleton-assets
-	url = https://dev.niif.hu/ALFI/skeleton-assets.git
+	url = https://dev.niif.hu/alfi/skeleton-assets.git
+[submodule "public/core-assets"]
+	path = public/core-assets
+	url = ../../alfi/skeleton-assets

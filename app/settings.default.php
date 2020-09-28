@@ -26,11 +26,14 @@ return [
                 ],
             ],
 
-            // Hello World custom module
-            'HelloWorld'  => [
+            // Documentation custom module
+            'Documentation'  => [
                 'enabled' => true,
                 'weight'  => 1, // Module load order
             ],
+
+
+
         ],
 
         // Load Settings

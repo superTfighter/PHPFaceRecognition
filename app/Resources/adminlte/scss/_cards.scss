@@ -12,12 +12,13 @@
 }
 
 .card {
+  border-top: 2px solid rgba(var(--main-color), 1);
   @include box-shadow($card-shadow);
   margin-bottom: map-get($spacers, 3);
 
   &.bg-dark {
     .card-header {
-      border-color: $card-dark-border-color;
+      border-color    : $card-dark-border-color;
     }
 
     &,
@@ -153,12 +154,13 @@ html.maximized-card {
 
 // Box header
 .card-header {
-  background-color: transparent;
-  border-bottom: 1px solid $card-border-color;
-  padding: (($card-spacer-y / 2) * 2) $card-spacer-x;
-  padding: .5rem 0.5rem .5rem 1.25rem;
-  position: relative;
-  height: 47px;
+  // background-color: transparent;
+  background-color: rgba(var(--main-color), .02);
+  border-bottom   : 1px solid $card-border-color;
+  padding         : (($card-spacer-y / 2) * 2) $card-spacer-x;
+  padding         : .5rem 0.5rem .5rem 1.25rem;
+  position        : relative;
+  height          : 47px;
 
   h3 {
     line-height: 32px !important;

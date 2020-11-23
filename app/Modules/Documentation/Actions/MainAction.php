@@ -3,9 +3,6 @@
 namespace App\Modules\Documentation\Actions;
 
 use App\Traits\CoreTrait;
-use Respect\Validation\Validator as v;
-use Respect\Validation\Exceptions\ExceptionInterface;
-use Respect\Validation\Exceptions\ValidationException;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -18,6 +15,18 @@ class MainAction
 
     public function home(Request $request, Response $response, $args)
     {
+        $userId = $this->auth->register('xeltomi71@gmail.com', 'test', 'lextomi12', function ($selector, $token) 
+        {
+            echo 'Send ' . $selector . ' and ' . $token . ' to the user (e.g. via email)';
+
+            $this->auth->confirmEmail($selector, $token);
+
+            echo 'Email address has been verified';
+        });
+
+        var_dump($userId);
+
+        die();
         return $this->view->render($response, '@Documentation/home.twig');
     }
 

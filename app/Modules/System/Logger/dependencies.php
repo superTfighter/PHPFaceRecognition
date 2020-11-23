@@ -2,7 +2,7 @@
 
 // Monolog
 $container['logger'] = function ($container) {
-    $settings = $container->get('settings')['settings']['System']['Logger'];
+    $settings = $container->settings['settings']['System']['logger']['default'];
 
     $logger = new \Monolog\Logger($settings['name']);
     $logger->pushProcessor(new \Monolog\Processor\UidProcessor());

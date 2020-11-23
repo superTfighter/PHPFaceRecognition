@@ -1,15 +1,20 @@
 <?php
 
-// Pdo
-$container['pdo'] = function ($container) {
-    $settings = $container->get('settings')['settings']['System']['Pdo'];
+$container['database'] = function ($container) {
 
-    $pdo = new stdClass;
 
-    // Load Pdo settings
-    foreach ($settings as $key => $value) {
-        $pdo->{$key} = new \FaaPz\PDO\Database($value['dsn'], $value['username'], $value['password'], $value['pdo']);
-    }
+    $pdo = new \PDO('sqlite:' .__DIR__ . '/../../../../DB/database');
 
-    return $pdo;
+    $db = \Delight\Db\PdoDatabase::fromPdo($pdo, true);
+
+    return $db;
+};
+
+$container['auth'] = function ($container) {
+
+    $db = $container->database;
+
+    $auth = new \Delight\Auth\Auth($db);
+
+    return $auth;
 };

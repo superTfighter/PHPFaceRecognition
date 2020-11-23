@@ -52,7 +52,6 @@
     <script src="js/app.js?{{ mtime('js/app.js') }}"></script>
     <!-- ALFI scripts -->
     <script src="core-assets/js/alfi.js?{{ mtime('core-assets/js/alfi.js') }}"></script>
-    <script src="//dev.profile.niif.hu/app/app.js?app_id={{ appcenter_app_id }}&token={{ appcenter_token }}"></script>
 
     {% block head %} {% endblock %}
 
@@ -73,12 +72,6 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-
-                <li class="nav-item">
-                    <div>
-                        <div id="appcenter"></div>
-                    </div>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">

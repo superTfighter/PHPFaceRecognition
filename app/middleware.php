@@ -7,3 +7,6 @@ $app->add(new \Slim\Middleware\Session([
   'autorefresh' => true,
   'lifetime'    => '3 hour'
 ]));
+
+
+$app->add(new \App\Middlewares\LoginMiddleware($container));

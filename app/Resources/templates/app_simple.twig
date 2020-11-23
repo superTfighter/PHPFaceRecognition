@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHPFaceAuth</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />		
+    <base href="{{ base_url() }}/">
+
+    <!-- STYLE -->
+    <!-- Google Font: Source Sans Pro -->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Theme style -->
+
+    <link rel="stylesheet" href="assets/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="core-assets/css/alfi.css">
+
+    <!-- Iconsets -->
+    <link rel="stylesheet" href="assets/font-awesome5/css/all.min.css">
+    <link rel="stylesheet" href="assets/font-awesome-animation/css/font-awesome-animation.min.css">
+    <link rel="stylesheet" href="assets/font-goodtimes/css/font-good_times.css">
+    <!-- Additional assets -->
+    <link rel="stylesheet" href="assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/select2/css/select2.min.css">
+    <link rel="stylesheet" href="assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/toastr/toastr.min.css">
+    <link rel="stylesheet" href="assets/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="css/app.css?{{ mtime('css/app.css') }}">
+    <style id="js-redefined-classes"></style>
+
+    <!-- SCRIPTS -->
+    <script src="assets/jquery/jquery.min.js"></script>
+    <script src="assets/jquery-ui/jquery-ui.min.js"></script>
+    <script src="assets/jquery-cookie/jquery.cookie.js"></script>
+   
+    {# A bootstrap-confirmation.js miatt van itt ez a blokk #}
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/adminlte/js/adminlte.min.js"></script>
+   
+    <script src="assets/moment/moment.min.js"></script>
+    <script src="assets/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="assets/bootstrap-confirmation/bootstrap-confirmation.min.js"></script>
+    <script src="assets/pace/js/pace.min.js"></script>
+    <script src="assets/toastr/toastr.min.js"></script>
+    <script src="assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="assets/select2/js/select2.min.js"></script>
+    <script src="js/app.js?{{ mtime('js/app.js') }}"></script>
+    <!-- ALFI scripts -->
+
+    <script src="core-assets/js/alfi.js"></script>
+    <script src="js/app.js"></script>
+
+    {% block script_include %}
+
+    
+    {% endblock %}
+  
+
+    {% block head %} {% endblock %}
+
+</head>
+	
+	<body class="hold-transition register-page">
+
+	{% block page_content %}
+
+
+	{% endblock %}
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    {% block body_tail %} 
+	
+	
+    {% endblock %}
+
+    {% block script %}
+
+    
+    {% endblock %}
+
+    <footer>
+
+        Copyright &copy; 2017-{{ now | date('Y') }} Lex Tomi
+    </footer>
+
+   
+</body>
+</html>

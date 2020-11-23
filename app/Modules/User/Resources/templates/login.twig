@@ -1,0 +1,110 @@
+{% extends 'app_simple.twig' %}
+
+{% block script_include %}
+
+{% endblock %}
+
+{% block page_content %}
+
+
+<div class="login-box">
+  <div class="login-logo">
+    <a href="{{ path_for('login') }}"><b>PHP</b>FaceAuth</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Jelentkezz be hagyományos módon vagy az arcodat használva!</p>
+
+      <form id="login-form" action="{{ path_for('login.post') }}" method="post">
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" name="email" placeholder="Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="password" placeholder="Jelszó" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block">Bejelentkezés</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- VAGY -</p>
+        <a href="{{ path_for('login.face') }}" class="btn btn-block btn-primary">
+          <i class="fas fa-smile-beam"></i>
+          Bejelentkezés arccal
+        </a>
+      </div>
+
+       <p class="mb-0">
+        <a href="{{ path_for('register') }}" class="text-center">Új felhasználó regisztrálása</a>
+      </p>
+
+
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+$(document).ready(function () {
+
+    $('#login-form').on('submit', function (e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+
+                if(data.status == "success")
+                {
+                    toastr.success(data.message, 'Siker!')
+                }
+                else
+                {
+                    toastr.error(data.message, 'Hiba!')
+                }
+   
+                console.log(data); 
+            },
+            error: function(message){
+                console.log(message);
+
+            }
+        });
+
+    });
+
+});
+
+
+
+
+</script>
+
+{% endblock %}

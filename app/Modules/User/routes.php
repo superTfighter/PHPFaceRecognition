@@ -16,7 +16,9 @@ $app->get   ('/',                                    function($request,$response
 $app->group('/login', function () use ($container) {
 
     $this->get('',            '@User\LoginAction:loginPage')->setName('login');
+    $this->post('',           '@User\LoginAction:loginPost')->setName('login.post');
 
+    $this->get('/face',       '@User\LoginAction:faceLogin')->setName('login.face');
 
 });
 
@@ -24,7 +26,5 @@ $app->group('/login', function () use ($container) {
 $app->group('/register', function () use ($container) {
 
     $this->get('',            '@User\RegisterAction:registerPage')->setName('register');
-
-
 
 });

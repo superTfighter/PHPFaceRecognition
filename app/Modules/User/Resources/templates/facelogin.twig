@@ -11,11 +11,10 @@
 
 <div class="row">
 
-<canvas width="640" height="480"></canvas>
+<canvas id="cnv-draw" width="640" height="480"></canvas>
 
 
 </div>
-
 
 
 <div class="login-box">
@@ -29,9 +28,9 @@
     <div class="card-body login-card-body">
 
     
-      <p class="login-box-msg">Használd a kamerád a bejelentkezéshez!</p>
+      <p class="login-box-msg">Használd a kamerád a bejelentkezéshez! Nézz egyenesen a kamerába és amikor látod a keretet a fejed körül kattints a gombra!</p>
 
-      <a id="btn-facedetect" href="#" class="btn btn-primary btn-block">Arc felismerése!</a>
+      <button id="btn-facedetect" class="btn btn-primary btn-block">Arc felismerése!</button>
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -51,7 +50,9 @@ $(document).ready(function () {
 
     var initialized = false;
 
-    function button_callback() {
+    var shouldRender = true;
+
+    function setupCameraRecognition() {
         /*
             (0) check whether we're already running face detection
         */
@@ -76,7 +77,7 @@ $(document).ready(function () {
         /*
             (3) get the drawing context on the canvas and define a function to transform an RGBA image to grayscale
         */
-        var ctx = document.getElementsByTagName('canvas')[0].getContext('2d');
+        var ctx = document.getElementById('cnv-draw').getContext('2d');
 
         function rgba_to_grayscale(rgba, nrows, ncols) {
             var gray = new Uint8Array(nrows * ncols);
@@ -113,13 +114,13 @@ $(document).ready(function () {
             dets = update_memory(dets);
             dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
             // draw detections
-            for (i = 0; i < dets.length; ++i){
+            for (i = 0; i < dets.length; ++i) {
 
                 // check the detection score
                 // if it's above the threshold, draw it
                 // (the constant 50.0 is empirical: other cascades might require a different one)
                 //$('#btn-facedetect').hide();
-                if (dets[i][3] > 50.0) {
+                if (dets[i][3] > 50.0 && shouldRender) {
                     var r, c, s;
                     //
                     /*ctx.beginPath();
@@ -133,16 +134,16 @@ $(document).ready(function () {
 
 
                     ctx.beginPath();
-                    ctx.rect(x, y, dets[i][2] , dets[i][2]); //left_cornerx,left_corner_y,height,width
+                    ctx.rect(x, y, dets[i][2], dets[i][2]); //left_cornerx,left_corner_y,height,width
                     ctx.lineWidth = 3;
                     ctx.strokeStyle = 'blue';
                     ctx.stroke();
                 }
-    
+
 
             }
 
-                
+
         }
         /*
             (5) instantiate camera handling (see https://github.com/cbrandolino/camvas)
@@ -155,11 +156,65 @@ $(document).ready(function () {
 
     };
 
-    button_callback();
+    setupCameraRecognition();
+
+    $('#btn-facedetect').on('click', function () {
+
+        shouldRender = false;
+        var btn = $(this);
+        btn.attr('disabled', true);
+
+        //Wait 100ms for render to disable 
+        setTimeout(function () {
+
+            var canvas = $('#cnv-draw')[0];
+
+            var dataURL = canvas.toDataURL();
+
+            $.ajax({
+                type: "POST",
+                url: "{{ path_for('login.face.post') }}",
+                data: {
+                    image: dataURL
+                }
+            })
+                .done(function (data) {
+
+                    shouldRender = true;
+                    btn.attr('disabled', false);
+
+                    if (data.status == "success") {
+                        toastr.success(data.message, 'Siker!')
+
+                        setTimeout(function () {
+
+                            window.location.href = "{{ path_for('userData')}}"
+
+                        }, 1000);
+                    }
+                    else {
+                        toastr.error(data.message, 'Hiba!')
+                    }
+
+
+                })
+                .fail(function (error) {
+                    console.log(error);
+
+                    shouldRender = true;
+                    btn.attr('disabled', false);
+
+                });
+
+
+
+        }, 100);
+
+
+    });
+
+
 });
-
-
-
 
 </script>
 

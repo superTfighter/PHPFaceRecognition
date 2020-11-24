@@ -10,18 +10,29 @@ use Slim\Http\Response;
 class LoginAction
 {
     use CoreTrait;
-    
-    public function loginPage($request,$response,$args)
+
+    public function loginPage($request, $response, $args)
     {
-        return $this->view->render($response,'@User\login.twig');
+        return $this->view->render($response, '@User\login.twig');
     }
 
-    public function faceLogin($request,$response,$args)
-    {        
-        return $this->view->render($response,'@User\facelogin.twig');
+    public function faceLogin($request, $response, $args)
+    {
+        return $this->view->render($response, '@User\facelogin.twig');
     }
 
-    public function loginPost($request,$response,$args)
+    public function faceLoginPost($request, $response, $args)
+    {
+        $base64_img = $request->getParsedBody()['image'];
+
+        $imgFile = $this->base64ToImage($base64_img,__DIR__ . '/../../../../tempImages');
+
+        $resp = $this->{'@User\LuxandRepository'}->recognize($imgFile);
+
+        return $response->withJson($resp);
+    }
+
+    public function loginPost($request, $response, $args)
     {
         $postData = $request->getParsedBody();
 
@@ -30,5 +41,34 @@ class LoginAction
         return $response->withJson($responseData);
     }
 
+    public function userDataPage($request, $response, $args)
+    {
+        return $this->view->render($response, '@User\userData.twig');
+    }
 
+    public function deleteAll($request, $response, $args)
+    {
+        $this->{'@User\LuxandFactory'}->deleteAllLuxandPerson();
+
+        
+        return $response;
+
+    }
+
+    private function base64ToImage($base64_string, $output_folder)
+    {
+        $data = explode(',', $base64_string);
+
+        $image = base64_decode($data[1]);
+
+        if (!is_dir($output_folder)) {
+            mkdir($output_folder, 0777, true);
+        }
+
+        $output_file = $output_folder . '/' . rand() . '.png';
+
+        file_put_contents($output_file,$image);
+
+        return $data[1];
+    }
 }

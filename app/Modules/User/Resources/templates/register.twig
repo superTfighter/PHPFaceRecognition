@@ -1,0 +1,337 @@
+{% extends 'app_simple.twig' %}
+
+{% block script_include %}
+
+   <script src="js/camvas.js"></script>
+    <script src="js/pico.js"></script>
+
+
+
+{% endblock %}
+
+{% block page_content %}
+
+
+<div class="row">
+
+<canvas id="cnv-draw" width="640" height="480" style="display:none"></canvas>
+
+
+</div>
+
+	<div class="register-box">
+		<div class="register-logo">
+			<a href="{{ path_for('register') }}">
+				<b>PHP</b>FaceAuth</a>
+		</div>
+		<!-- /.login-logo -->
+		<div class="card">
+			<div class="card-body register-card-body">
+				<p id="msg1" class="login-box-msg">Regisztrálj új identitást</p>
+
+                <p style="display:none" id="msg2" class="login-box-msg">Használd a kamerád a regisztrációhoz! Nézz egyenesen a kamerába és amikor látod a keretet a fejed körül kattints a gombra!</p>
+
+				<form id="register-form" action="{{ path_for('register.post')}}" method="post">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" name="username" placeholder="Felhasználó név" required>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-user"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="email" class="form-control" name="email" placeholder="Email" required>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-envelope"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" class="form-control" name="pws1" placeholder="Password" required>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" class="form-control" name="pws2" placeholder="Retype password" required>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="icheck-primary">
+								<input type="checkbox" id="faceAuth" name="terms" value="agree">
+								<label for="faceAuth">
+                                    Kérek arc alapú azonosítást(további lépések szükségesek!)
+								</label>
+							</div>
+						</div>
+						<!-- /.col -->
+						<div class="col-6">
+							<button type="submit" class="btn btn-primary btn-block">Regisztráció</button>
+						</div>
+						<!-- /.col -->
+					</div>
+				</form>
+
+
+                <button style="display:none" id="btn-facedetect" class="btn btn-primary btn-block">Arc felismerése!</button>
+			</div>
+			<!-- /.form-box -->
+		</div>
+
+	</div>
+
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+$(document).ready(function () {
+
+    var userId = null;
+
+    var times_clicked = 0;
+
+    $('#register-form').on('submit', function (e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+
+                if (data.status == "success") {
+                    toastr.success(data.message, 'Siker!')
+
+                    var checkbox = $('#faceAuth');
+
+                    if (checkbox.prop("checked")) {
+                        form.hide();
+                        $('#msg1').hide();
+
+                        userId = data.userId;
+
+                        setupCameraRecognition();
+
+                        $('#cnv-draw').show();
+                        $('#msg2').show();
+                        $('#btn-facedetect').show();
+
+                    }
+                }
+                else {
+                    toastr.error(data.message, 'Hiba!')
+                }
+
+                console.log(data);
+            },
+            error: function (message) {
+                console.log(message);
+
+            }
+        });
+
+    });
+
+    var initialized = false;
+
+    var shouldRender = true;
+
+    function setupCameraRecognition() {
+        /*
+            (0) check whether we're already running face detection
+        */
+        if (initialized)
+            return; // if yes, then do not initialize everything again
+        /*
+            (1) initialize the pico.js face detector
+        */
+        var update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
+
+        var facefinder_classify_region = function (r, c, s, pixels, ldim) { return -1.0; };
+
+
+        var cascadeurl = 'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
+        fetch(cascadeurl).then(function (response) {
+            response.arrayBuffer().then(function (buffer) {
+                var bytes = new Int8Array(buffer);
+                facefinder_classify_region = pico.unpack_cascade(bytes);
+            })
+        })
+
+        /*
+            (3) get the drawing context on the canvas and define a function to transform an RGBA image to grayscale
+        */
+        var ctx = document.getElementById('cnv-draw').getContext('2d');
+
+        function rgba_to_grayscale(rgba, nrows, ncols) {
+            var gray = new Uint8Array(nrows * ncols);
+            for (var r = 0; r < nrows; ++r)
+                for (var c = 0; c < ncols; ++c)
+                    // gray = 0.2*red + 0.7*green + 0.1*blue
+                    gray[r * ncols + c] = (2 * rgba[r * 4 * ncols + 4 * c + 0] + 7 * rgba[r * 4 * ncols + 4 * c + 1] + 1 * rgba[r * 4 * ncols + 4 * c + 2]) / 10;
+            return gray;
+        }
+        /*
+            (4) this function is called each time a video frame becomes available
+        */
+        var processfn = function (video, dt) {
+            // render the video frame to the canvas element and extract RGBA pixel data
+            ctx.drawImage(video, 0, 0);
+            var rgba = ctx.getImageData(0, 0, 640, 480).data;
+            // prepare input to `run_cascade`
+            image = {
+                "pixels": rgba_to_grayscale(rgba, 480, 640),
+                "nrows": 480,
+                "ncols": 640,
+                "ldim": 640
+            }
+            params = {
+                "shiftfactor": 0.1, // move the detection window by 10% of its size
+                "minsize": 100,     // minimum size of a face
+                "maxsize": 1000,    // maximum size of a face
+                "scalefactor": 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
+            }
+            // run the cascade over the frame and cluster the obtained detections
+            // dets is an array that contains (r, c, s, q) quadruplets
+            // (representing row, column, scale and detection score)
+            dets = pico.run_cascade(image, facefinder_classify_region, params);
+            dets = update_memory(dets);
+            dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
+            // draw detections
+            for (i = 0; i < dets.length; ++i) {
+
+                // check the detection score
+                // if it's above the threshold, draw it
+                // (the constant 50.0 is empirical: other cascades might require a different one)
+                //$('#btn-facedetect').hide();
+                if (dets[i][3] > 50.0 && shouldRender) {
+                    var r, c, s;
+                    //
+                    /*ctx.beginPath();
+                    ctx.arc(dets[i][1], dets[i][0], dets[i][2] / 2, 0, 2 * Math.PI, false); //x,y,radius
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = 'red';
+                    ctx.stroke();*/
+
+                    var x = dets[i][1] - dets[i][2] / 2;
+                    var y = dets[i][0] - dets[i][2] / 2;
+
+
+                    ctx.beginPath();
+                    ctx.rect(x, y, dets[i][2], dets[i][2]); //left_cornerx,left_corner_y,height,width
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = 'blue';
+                    ctx.stroke();
+                }
+
+
+            }
+
+
+        }
+        /*
+            (5) instantiate camera handling (see https://github.com/cbrandolino/camvas)
+        */
+        var mycamvas = new camvas(ctx, processfn);
+        /*
+            (6) it seems that everything went well
+        */
+        initialized = true;
+
+    };
+
+
+    $('#btn-facedetect').on('click', function () {
+
+        if (times_clicked < 3) {
+
+            shouldRender = false;
+            var btn = $(this);
+            btn.attr('disabled', true);
+
+            //Wait 100ms for render to disable 
+            setTimeout(function () {
+
+                var canvas = $('#cnv-draw')[0];
+
+                var dataURL = canvas.toDataURL();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path_for('register.face.post') }}",
+                    data: {
+                        image: dataURL,
+                        id: userId
+                    }
+                })
+                    .done(function (data) {
+                        console.log(data);
+
+                        shouldRender = true;
+                        btn.attr('disabled', false);
+
+                        if(data['status'] == 'success')
+                        {
+                            toastr.success('Sikeres hozzáadás!', 'Siker!')
+
+                        }else
+                        {
+                            toastr.error('', 'Hiba!')
+                        }
+
+                        times_clicked++;
+                    })
+                    .fail(function (error) {
+                        console.log("Error");
+
+                        shouldRender = true;
+                        btn.attr('disabled', false);
+
+                    });
+
+
+
+            }, 100);
+
+
+        }
+        else
+        {
+            toastr.success('Sikeres regisztráció! Az oldal átirányít!', 'Siker!')
+
+           setTimeout(function () {
+
+                window.location.href = "{{ path_for('login')}}"
+
+            }, 1000);
+        }
+
+
+
+    });
+
+
+});
+
+
+
+
+    
+</script>
+
+{% endblock %}

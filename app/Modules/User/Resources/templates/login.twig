@@ -81,18 +81,22 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function (data) {
 
-                if(data.status == "success")
-                {
+                if (data.status == "success") {
                     toastr.success(data.message, 'Siker!')
+
+                    setTimeout(function () {
+
+                      window.location.href = "{{ path_for('userData')}}"
+
+                    }, 1000);
                 }
-                else
-                {
+                else {
                     toastr.error(data.message, 'Hiba!')
                 }
-   
-                console.log(data); 
+
+                console.log(data);
             },
-            error: function(message){
+            error: function (message) {
                 console.log(message);
 
             }

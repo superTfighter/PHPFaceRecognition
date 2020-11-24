@@ -1,1 +1,52 @@
-asdsad
+{% extends 'app.twig' %}
+
+{% block script_include %}{% endblock %}
+
+{% block body_content %}
+
+	<div class="row">
+
+		<div class="col-12">
+
+			<div class="card card-outline card-primary">
+				<div class="card-header">
+					<h3 class="card-title">Felhasználói adatok</h3>
+
+					<div class="card-tools"></div>
+					<!-- /.card-tools -->
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+
+                <p>Gratulálunk! Sikeresen bejelentkeztél! Az alábbi adatokat tartjuk nyilván rólad: </p>
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Név</th>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ user.id }}</td>
+								<td>{{ user.username }}</td>
+								<td>{{ user.email }}</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+				<!-- /.card-body -->
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+
+{% endblock %}

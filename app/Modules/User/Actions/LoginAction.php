@@ -43,7 +43,13 @@ class LoginAction
 
     public function userDataPage($request, $response, $args)
     {
-        return $this->view->render($response, '@User\userData.twig');
+        $id = $this->auth->getUserId();
+
+        $user = $this->{'@User\LoginRepository'}->getUserById($id);
+
+        var_dump($user);
+
+        return $this->view->render($response, '@User\userData.twig',['user' => $user]);
     }
 
     public function deleteAll($request, $response, $args)

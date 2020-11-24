@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skeleton v2</title>
+    <title>PHPFaceAuth</title>
     <base href="{{ base_url() }}/">
 
     <!-- STYLE -->
@@ -84,10 +84,9 @@
 
         <aside class="main-sidebar sidebar-dark-danger elevation-4">
 
-            <!-- Brand Logo -->
             <a href="./" class="logo brand-link navbar-kifuv2" style="text-align: center; height: 56px; line-height: 56px; padding: 0;">
                 <div class="logo-xl d-block w-100">
-                    <i class="fa-fw far fa-skull"></i> Skeleton
+                    <i class="fa-fw far fa-skull"></i> PHPFaceAuth
                 </div>
                 <div class="logo-xs d-block w-100">
                     <i class="fa-fw far fa-skull"></i>
@@ -99,86 +98,14 @@
 
                 <nav class="mt-2">
 
-                    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-header">Example group</li>
+                    
 
-                        <li class="nav-item has-treeview menu-open">
-                            <a class="nav-link {{ is_active_path('documentation') }}" href="#">
-                                <i class="far fa-fw fa-users-cog"></i>
-                                <p>
-                                    Documentation
-                                    <i class="fa fa-angle-left right"></i>
-                                </p>
-                            </a>
-
-                            <ul class="nav nav-treeview " style="display: block;">
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/alert') }}" href="{{ path_for('documentation_alert') }}">
-                                        <i class="far fa-fw fa-exclamation-triangle"></i>
-                                        <p>Alert</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/ajax_url') }}" href="{{ path_for('documentation_ajax_url') }}">
-                                        <i class="far fa-fw fa-link"></i>
-                                        <p>ajax-url</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/ajax_modal') }}" href="{{ path_for('documentation_ajax_modal') }}">
-                                        <i class="far fa-fw fa-window"></i>
-                                        <p>ajax-modal</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/bb') }}" href="{{ path_for('documentation_bb') }}">
-                                        <i class="far fa-fw fa-window"></i>
-                                        <p>BlurBox</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/ajax_form') }}" href="{{ path_for('documentation_ajax_form') }}">
-                                        <i class="far fa-fw fa-edit"></i>
-                                        <p>ajax-form</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/datetimepicker') }}" href="{{ path_for('documentation_datetimepicker') }}">
-                                        <i class="far fa-fw fa-calendar"></i>
-                                        <p>Date-, DateTimePicker</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/datatable') }}" href="{{ path_for('documentation_datatable') }}">
-                                        <i class="far fa-fw fa-table"></i>
-                                        <p>Datatable</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active_path('documentation/css-and-js') }}" href="{{ path_for('documentation_css_js') }}">
-                                        <i class="far fa-fw fa-paint-brush"></i>
-                                        <p>CSS & JS</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                    </ul>
 
                 </nav>
             </div>
 
         </aside>
 
-        <div id="temp-class-g8rw374grt834"></div>
         {% include "layouts/_control_sidebar.twig" %}
 
         <div class="content-wrapper">
@@ -197,10 +124,7 @@
         </div>
 
         <footer class="main-footer d-print-none">
-            <div class="float-right hidden-xs">
-                ALFI
-            </div>
-            Copyright &copy; 2017-{{ now | date('Y') }} <a href="http://kifu.gov.hu" >KIFÜ</a>
+             Copyright &copy; 2017-{{ now | date('Y') }} Lex Tomi
         </footer>
 
     </div>

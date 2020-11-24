@@ -1,47 +1,15 @@
-# Általános tudnivalók V2
+# PHPFaceRecognition
 
-## Függőségek
-* node.js
-* composer
 
-## További függőség
-gulp-cli
-```
-sudo npm install gulp-cli -g
-```
-bower
-```
-sudo npm install bower -g
-```
-
-## Fejlesztői környezet kialakítása
-A repóból való clone-ozás után töltsük le a php-s függőségeket
-```
-$ composer install
-```
-Projecthez tartozó többi függőség letöltése (opcionális)
-```
-$ bower install
-$ npm install
-```
-
-## LESS fordító indítása
-Az előző opcionális lépésből az npm install ebben az esetben kötelező.
-```
-$ screen -S screen_name
-$ gulp
-```
-Az összes app\Resouces\less -ben található .less fájl lefordul a public\css könyvtárba.
-Figyelem: A gulp script úgy van megírva, hogy a .less fájlokat figyeli, így ha valami változás van benne akkor rögtön fordítja is .css-re (watch funkció)
-
-## Külső JS és CSS csomagok frissítés saját projekten belűl
-A project gyökerében adjuk ki az alábbi parancsokat
-```
-$ bower update
-$ gulp build
-```
+## Projekt célja
+Ezt a projektet azért készítettem,hogy bebizonyítsam,hogy van haszna olyan weboldalakat készíteni,amelyek képekesek arc alapú azonosításra.
+Ebben a kis alkalmazásban lehetőség van új felhasználók létrehozására és a regisztrációs folyamat során megadhatjuk,hogy képesek legyünk későbbi arca alapú belépésre is.
+Ha élünk ezzel a lehetőséggel a webkameránk segítségével készítenünk kell 3db fotót magunkról(követni az alkalmazás utasításait) és ezek után nem csak a hagyományos módon,hanem arcfelismeréssel is képesek leszünk beazonosítani.
+A projekt egy JS scriptet használ az arc azonosítására(így validálva,hogy egyáltalán van-e arc az adott képen), majd ezt a képet a backend felé közvetítve egy API-val beszélget.
+Apinak a Luxand megoldását választottam,mivel a projektem fő célja az volt,hogy bemutassam,hogy egyáltalán lehetséges-e ez a dolog és ,hogy képes egy elég gyors,kényelmes és megbízható működésre.
 
 # Hasznos dokumentációk
 
 * [Slim Framework](https://www.slimframework.com/)
 * [Twig](https://twig.symfony.com/doc/2.x/)
+* [Luxand](https://luxand.cloud/)

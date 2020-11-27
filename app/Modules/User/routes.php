@@ -35,6 +35,8 @@ $app->group('/register', function () use ($container) {
     $this->get('',            '@User\RegisterAction:registerPage')->setName('register');
     $this->post('',           '@User\RegisterAction:registerPost')->setName('register.post');
 
-    $this->post('/face',       '@User\RegisterAction:facePost')->setName('register.face.post');
+    $this->post('/face',      '@User\RegisterAction:facePost')->setName('register.face.post');
+
+    $this->get('/train' ,     '@User\RegisterAction:train')->setName('register.face.train');
 
 });

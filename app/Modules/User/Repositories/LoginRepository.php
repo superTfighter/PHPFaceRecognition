@@ -42,6 +42,20 @@ class LoginRepository
         return $userData;
     }
 
+    public function getUserByUserName($name)
+    {
+        $columnsToFetch = ['id', 'email', 'password', 'verified', 'username', 'status', 'roles_mask', 'force_logout'];
+
+        $projection = \implode(', ', $columnsToFetch);
+        $userData = $this->database->selectRow(
+            'SELECT ' . $projection . ' FROM users WHERE username = ?',
+            [ $name ]
+        );
+
+        return $userData;
+
+    }
+
     public function getLuxandIdByUserId($user_id)
     {
         $row = $this->database->selectRow(

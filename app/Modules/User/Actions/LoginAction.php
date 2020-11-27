@@ -25,9 +25,17 @@ class LoginAction
     {
         $base64_img = $request->getParsedBody()['image'];
 
-        $imgFile = $this->base64ToImage($base64_img,__DIR__ . '/../../../../tempImages');
 
-        $resp = $this->{'@User\LuxandRepository'}->recognize($imgFile);
+        if($this->settings['settings']['luxand']){
+
+            $imgFile = $this->base64ToImage($base64_img,__DIR__ . '/../../../../tempImages');
+            $resp = $this->{'@User\LuxandRepository'}->recognize($imgFile);
+
+        }else{
+
+            $resp = $this->{'@User\ApiRepository'}->recognize($this->parseBase64Image($base64_img));
+
+        }
 
         return $response->withJson($resp);
     }
@@ -59,6 +67,13 @@ class LoginAction
         
         return $response;
 
+    }
+
+    private function parseBase64Image($base64_string)
+    {
+        $data = explode(',', $base64_string);
+
+        return $data[1];
     }
 
     private function base64ToImage($base64_string, $output_folder)

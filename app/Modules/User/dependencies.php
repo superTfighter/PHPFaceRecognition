@@ -27,3 +27,12 @@ $container['@User\LuxandRepository'] = function($container) {
     return new \App\Modules\User\Repositories\LuxandRepository($container);
 };
 
+$container['@User\ApiFactory'] = function($container) {
+    return new \App\Modules\User\Factories\ApiFactory($container);
+};
+
+$container['@User\ApiRepository'] = function($container) {
+    return new \App\Modules\User\Repositories\ApiRepository($container);
+};
+
+

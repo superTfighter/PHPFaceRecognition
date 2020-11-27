@@ -100,7 +100,7 @@ $(document).ready(function () {
 
     var userId = null;
 
-    var times_clicked = 0;
+    var times_clicked = 0; 
 
     $('#register-form').on('submit', function (e) {
         e.preventDefault();
@@ -280,14 +280,13 @@ $(document).ready(function () {
                     }
                 })
                     .done(function (data) {
-                        console.log(data);
 
                         shouldRender = true;
                         btn.attr('disabled', false);
 
                         if(data['status'] == 'success')
                         {
-                            toastr.success('Sikeres hozzáadás!', 'Siker!')
+                            toastr.success('Sikeres hozzáadás! Még: ' + (3 - times_clicked) + " darab kép kell!", 'Siker!')
 
                         }else
                         {
@@ -312,13 +311,27 @@ $(document).ready(function () {
         }
         else
         {
-            toastr.success('Sikeres regisztráció! Az oldal átirányít!', 'Siker!')
+
+            var btn = $(this);
+            btn.attr('disabled', true);
+
+            toastr.success('Köszönjük! Az oldal feldolgoz! Kérjük ne navigáljon el, a folyamat pár másodpercen belül végbe megy!', 'Siker!')
+            
+            $.get('{{ path_for('register.face.train' )}}',function(data){
+
+                btn.attr('disabled', false);
+                toastr.success('Sikeres regisztráció! Az oldal átirányít!', 'Siker!')
 
            setTimeout(function () {
 
                 window.location.href = "{{ path_for('login')}}"
 
             }, 1000);
+
+            });
+
+
+            
         }
 
 

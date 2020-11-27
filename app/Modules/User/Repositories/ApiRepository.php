@@ -43,6 +43,12 @@ class ApiRepository
 
         $resp = $this->api->own->call('/recognize', $options);
 
+
+        if($resp['code'] != 200)
+        {
+            return ['status' => 'error', 'message' => $resp['code']];
+        }
+
         $message = $resp['data']['message'];
 
         if (!is_null($message)) {

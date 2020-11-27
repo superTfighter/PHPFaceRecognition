@@ -48,8 +48,6 @@ class ApiRepository
         if (!is_null($message)) {
 
             $message = trim($message);
-
-            //return ['status' => 'error', 'message' => 'Sikeres bejelentkezés! Üdvözöllek ' . $message . ' !'];
             
             $userData = $this->{'@User\LoginRepository'}->getUserByUserName($message);
 

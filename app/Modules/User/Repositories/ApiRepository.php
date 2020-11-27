@@ -53,6 +53,11 @@ class ApiRepository
             
             $userData = $this->{'@User\LoginRepository'}->getUserByUserName($message);
 
+            if(is_null($userData))
+            {
+                return ['status' => 'error', 'message' => 'Arc nem lett felismerve!'];
+            }
+
             $this->updateFaceLoginTime($userData['id']);
             $this->updateSession($userData);
 

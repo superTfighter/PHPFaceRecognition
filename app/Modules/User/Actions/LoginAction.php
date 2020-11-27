@@ -34,7 +34,6 @@ class LoginAction
         }else{
 
             $resp = $this->{'@User\ApiRepository'}->recognize($this->parseBase64Image($base64_img));
-
         }
 
         return $response->withJson($resp);

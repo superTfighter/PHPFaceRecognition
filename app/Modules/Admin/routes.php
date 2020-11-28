@@ -10,6 +10,7 @@ $app->group('/admin', function () use ($container) {
 
     $this->get('/users',      '@Admin\AdminAction:usersPage')->setName('admin.users');
     $this->get('/database',   '@Admin\AdminAction:databasePage')->setName('admin.database');
+    $this->get('/api',        '@Admin\AdminAction:apiPage')->setName('admin.api');
 
 
     $this->group('/json', function () use ($container) {
@@ -23,8 +24,10 @@ $app->group('/admin', function () use ($container) {
     $this->group('/ajax', function () use ($container) {
 
         $this->delete('/user/{id}',            '@Admin\AdminAction:deleteUser')->setName('admin.users.delete.ajax');
-        
         $this->delete('/database/{name}',      '@Admin\AdminAction:truncateTable')->setName('admin.database.delete.ajax');
+
+        $this->get('/api/temp',                '@Admin\AdminAction:deleteTempFromApi')->setName('admin.api.temp.delete.ajax');
+        $this->get('/api/all',                 '@Admin\AdminAction:deleteAllFromApi')->setName('admin.api.all.delete.ajax');
 
 
     });

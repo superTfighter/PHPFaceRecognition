@@ -45,4 +45,24 @@ class AdminFactory
             return false;
         }
     }
+
+    public function deleteTemp()
+    {
+        $options =
+        [
+            "method" => "DELETE"
+        ];
+
+        $resp = $this->api->own->call('/delete/temp',$options);
+    }
+
+    public function deleteAll()
+    {
+        $options =
+        [
+            "method" => "DELETE"
+        ];
+
+        $resp = $this->api->own->call('/delete/all',$options);
+    }
 }

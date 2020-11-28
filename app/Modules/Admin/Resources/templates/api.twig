@@ -1,0 +1,109 @@
+{% extends 'app.twig' %}
+
+{% block script_include %}{% endblock %}
+
+{% block body_content %}
+
+	<div class="row">
+
+		<div class="col-12">
+
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">API változók</h3>
+					<button type="button" class="btn btn-refresh float-right">
+						<i class="fas fa-sync-alt"></i>
+					</button>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Task</th>
+                                <th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1.</td>
+								<td>Temp képek törlése</td>
+								<td>
+									<button id="btn-delete-tmp" type="button" class="btn btn-danger">Törlés</button>
+								</td>
+							</tr>
+							<tr>
+								<td>2.</td>
+								<td>Összes adat törlése</td>
+								<td>
+									<button id="btn-delete-all" type="button" class="btn btn-danger">Törlés</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card-->
+
+
+		</div>
+
+
+	</div>
+
+
+{% endblock %}
+
+
+{% block body_tail %}
+
+<script>
+
+$('#btn-delete-tmp').on('click',function(){
+
+    var btn = $(this);
+    btn.attr('disabled',true);
+
+    $.get('{{ path_for('admin.api.temp.delete.ajax') }}',function(data){
+
+        if (data.status == 'success') 
+        {
+          toastr.success('Sikeres törlés');
+        }
+
+        btn.attr('disabled',false);
+
+    })
+
+});
+
+$('#btn-delete-all').on('click',function(){
+
+    var btn = $(this);
+    btn.attr('disabled',true);
+
+    $.get('{{ path_for('admin.api.all.delete.ajax') }}',function(data){
+
+        if (data.status == 'success') 
+        {
+          toastr.success('Sikeres törlés');
+        }
+
+        btn.attr('disabled',false);
+
+    })
+
+});
+
+
+    
+    
+</script>
+
+
+{% endblock %}

@@ -24,7 +24,7 @@ class ApiFactory
 
         ];
 
-        $resp = $this->api->own->call('/store/' . $user['username'],$options);
+        $resp = $this->api->own->call('/store/' . $user['id'],$options);
 
         return $resp['data'];
     }

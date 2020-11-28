@@ -55,7 +55,7 @@ class ApiRepository
 
             $message = trim($message);
             
-            $userData = $this->{'@User\LoginRepository'}->getUserByUserName($message);
+            $userData = $this->{'@User\LoginRepository'}->getUserById($message);
 
             if(is_null($userData))
             {

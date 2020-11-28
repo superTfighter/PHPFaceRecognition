@@ -6,3 +6,5 @@ composer.lock
 package-lock.json
 Dokumentáció.odt
 /tempImages
+/log
+!log/.gitkeep

@@ -24,7 +24,7 @@ $app->group('/login', function () use ($container) {
 
 $app->group('/user', function () use ($container) {
 
-    $this->get('',            '@User\LoginAction:userDataPage')->setName('userData');
+    $this->get('',            '@User\LoginAction:userDataPage')->setName('user.data');
 
 });
 

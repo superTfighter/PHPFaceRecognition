@@ -1,160 +1,203 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PHPFaceAuth</title>
-    <base href="{{ base_url() }}/">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>PHPFaceAuth</title>
+		<base href="{{ base_url() }}/">
 
-    <!-- STYLE -->
-    <!-- Google Font: Source Sans Pro -->
-    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="core-assets/adminlte/css/adminlte.min.css?{{ mtime('core-assets/adminlte/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="core-assets/css/alfi.css?{{ mtime('core-assets/css/alfi.css') }}">
-    <!-- DateTime -->
-    <!--link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css"-->
-    <link rel="stylesheet" href="assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
-    <!-- Iconsets -->
-    <link rel="stylesheet" href="assets/font-awesome5/css/all.min.css">
-    <link rel="stylesheet" href="assets/font-awesome-animation/css/font-awesome-animation.min.css">
-    <link rel="stylesheet" href="assets/font-goodtimes/css/font-good_times.css">
-    <!-- Additional assets -->
-    <link rel="stylesheet" href="assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets/select2/css/select2.min.css">
-    <link rel="stylesheet" href="assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    
-    <link rel="stylesheet" href="assets/toastr/toastr.min.css">
-    <link rel="stylesheet" href="css/app.css?{{ mtime('css/app.css') }}">
-    <style id="js-redefined-classes"></style>
+		<!-- STYLE -->
+		<!-- Google Font: Source Sans Pro -->
+		<link
+		href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> <!-- Theme style -->
+		<link rel="stylesheet" href="core-assets/adminlte/css/adminlte.min.css?{{ mtime('core-assets/adminlte/css/adminlte.min.css') }}">
+		<link rel="stylesheet" href="core-assets/css/alfi.css?{{ mtime('core-assets/css/alfi.css') }}">
+		<!-- DateTime -->
+		<!--link rel="stylesheet" href="assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css"-->
+		<link
+		rel="stylesheet" href="assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"> <!-- Iconsets -->
+		<link rel="stylesheet" href="assets/font-awesome5/css/all.min.css">
+		<link rel="stylesheet" href="assets/font-awesome-animation/css/font-awesome-animation.min.css">
+		<link
+		rel="stylesheet" href="assets/font-goodtimes/css/font-good_times.css">
+		<!-- Additional assets -->
+		<link rel="stylesheet" href="assets/datatables-bs4/css/dataTables.bootstrap4.min.css">
+		<link rel="stylesheet" href="assets/select2/css/select2.min.css">
+		<link rel="stylesheet" href="assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-    <!-- SCRIPTS -->
-    <script src="assets/jquery/jquery.min.js"></script>
-    <script src="assets/jquery-ui/jquery-ui.min.js"></script>
-    <script src="assets/jquery-cookie/jquery.cookie.js"></script>
-    {# A bootstrap-confirmation.js miatt van itt ez a blokk #}
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js?{{ mtime('core-assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="core-assets/adminlte/js/adminlte.min.js?{{ mtime('core-assets/adminlte/js/adminlte.min.js') }}"></script>
-    <script src="assets/moment/moment.min.js"></script>
-    <script src="assets/moment/locale/hu.js"></script>
-    <!--script src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script-->
-    <!--script src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.hu.min.js"></script-->
-    <script src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="assets/bootstrap-confirmation/bootstrap-confirmation.min.js"></script>
-    <script src="assets/pace/js/pace.min.js"></script>
-    <script src="assets/toastr/toastr.min.js"></script>
-    <script src="assets/datatables/jquery.dataTables.min.js"></script>
-    <script src="assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-    <script src="assets/select2/js/select2.full.js"></script>
-    <script src="js/app.js?{{ mtime('js/app.js') }}"></script>
-    <!-- ALFI scripts -->
-    <script src="core-assets/js/alfi.js?{{ mtime('core-assets/js/alfi.js') }}"></script>
+		<link rel="stylesheet" href="assets/toastr/toastr.min.css">
+		<link rel="stylesheet" href="css/app.css?{{ mtime('css/app.css') }}">
+		<style id="js-redefined-classes"></style>
 
-    {% block head %} {% endblock %}
+		<!-- SCRIPTS -->
+		<script src="assets/jquery/jquery.min.js"></script>
+		<script src="assets/jquery-ui/jquery-ui.min.js"></script>
+		<script src="assets/jquery-cookie/jquery.cookie.js"></script>
+		{# A bootstrap-confirmation.js miatt van itt ez a blokk #}
+		<script src="assets/bootstrap/js/bootstrap.bundle.min.js?{{ mtime('core-assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+		<script src="core-assets/adminlte/js/adminlte.min.js?{{ mtime('core-assets/adminlte/js/adminlte.min.js') }}"></script>
+		<script src="assets/moment/moment.min.js"></script>
+		<script src="assets/moment/locale/hu.js"></script>
+		<!--script src="assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script-->
+		<!--script src="assets/bootstrap-datepicker/locales/bootstrap-datepicker.hu.min.js"></script-->
+		<script src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="assets/bootstrap-confirmation/bootstrap-confirmation.min.js"></script>
+		<script src="assets/pace/js/pace.min.js"></script>
+		<script src="assets/toastr/toastr.min.js"></script>
+		<script src="assets/datatables/jquery.dataTables.min.js"></script>
+		<script src="assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+		<script src="assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+		<script src="assets/select2/js/select2.full.js"></script>
+		<script src="js/app.js?{{ mtime('js/app.js') }}"></script>
+		<!-- ALFI scripts -->
+		<script src="core-assets/js/alfi.js?{{ mtime('core-assets/js/alfi.js') }}"></script>
 
-</head>
-<body class="hold-transition navbar-dark sidebar-mini {{ cookie['sidebar_collapse'] }}">
+		{% block head %}{% endblock %}
 
-    <div class="wrapper">
+	</head>
+	<body class="hold-transition navbar-dark sidebar-mini {{ cookie['sidebar_collapse'] }}">
 
-        <nav class="main-header navbar navbar-expand border-bottom-0" role="navigation" style="height: 56px;">
+		<div class="wrapper">
 
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link sidebar-toggle" data-widget="pushmenu">
-                        <i class="fa-fw fas fa-bars"></i>
-                    </a>
-                </li>
-            </ul>
+			<nav
+				class="main-header navbar navbar-expand border-bottom-0" role="navigation" style="height: 56px;">
 
-            <ul class="navbar-nav ml-auto">
+				<!-- Left navbar links -->
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link sidebar-toggle" data-widget="pushmenu">
+							<i class="fa-fw fas fa-bars"></i>
+						</a>
+					</li>
+				</ul>
 
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                        <i class="fas fa-cogs"></i>
-                    </a>
-                </li>
-            </ul>
+				<ul class="navbar-nav ml-auto">
 
-        </nav>
+					<li class="nav-item">
+						<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+							<i class="fas fa-cogs"></i>
+						</a>
+					</li>
+				</ul>
 
-        <aside class="main-sidebar sidebar-dark-danger elevation-4">
+			</nav>
 
-            <a href="./" class="logo brand-link navbar-kifuv2" style="text-align: center; height: 56px; line-height: 56px; padding: 0;">
-                <div class="logo-xl d-block w-100">
-                    <i class="fa-fw far fa-skull"></i> PHPFaceAuth
-                </div>
-                <div class="logo-xs d-block w-100">
-                    <i class="fa-fw far fa-skull"></i>
-                </div>
-              <div style="clear: both;"></div>
-            </a>
+			<aside class="main-sidebar sidebar-dark-danger elevation-4">
 
-            <div class="sidebar">
+				<a href="./" class="logo brand-link navbar-kifuv2" style="text-align: center; height: 56px; line-height: 56px; padding: 0;">
+					<div class="logo-xl d-block w-100">
+						<i class="fa-fw far fa-skull"></i>
+						PHPFaceAuth
+					</div>
+					<div class="logo-xs d-block w-100">
+						<i class="fa-fw far fa-skull"></i>
+					</div>
+					<div style="clear: both;"></div>
+				</a>
 
-                <nav class="mt-2">
+				<div class="sidebar">
 
-                    
+					<nav class="mt-2">
 
+						<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+							<li class="nav-header">Felhasználó</li>
 
-                </nav>
-            </div>
-
-        </aside>
-
-        {% include "layouts/_control_sidebar.twig" %}
-
-        <div class="content-wrapper">
-
-            <section class="content-header">
-                <h1>
-                    {% block body_content_header %} {% endblock %}
-                </h1>
-            </section>
-
-            <section class="content">
-                <div class="container-fluid">
-                    {% block body_content %} {% endblock %}
-                </div>
-            </section>
-        </div>
-
-        <footer class="main-footer d-print-none">
-             Copyright &copy; 2017-{{ now | date('Y') }} Lex Tomi
-        </footer>
-
-    </div>
+							<li class="nav-item">
+								<a class="nav-link {{ is_active_path('user') }}" href="{{ path_for('user.data') }}">
+									<i class="far fa-fw fa-user"></i>
+									<p>Felhasználói adatok</p>
+								</a>
+							</li>
 
 
-    <div class="fade modal" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title float-left"></h4>
-                    <a class="close"><i class="fa-fw far fa-times"></i></a>
-                </div>
-                <div class="modal-body">
-                    <div class='loader'><i class='fa fa-spin fa-spinner'></i></div>
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
+						</ul>
 
 
+						<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+							<li class="nav-header">Admin</li>
 
-    <!-- ALFI DEFAUTLS -->
+                            <li class="nav-item">
+								<a class="nav-link {{ is_active_path('admin/users') }}" href="{{ path_for('admin.users') }}">
+									<i class="far fa-fw fa-user"></i>
+									<p>Összes felhasználó</p>
+								</a>
+							</li>
 
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
+                            <li class="nav-item">
+								<a class="nav-link {{ is_active_path('admin/database') }}" href="{{ path_for('admin.database') }}">
+									<i class="far fa-fw fa-list"></i>
+									<p>Adatbázis</p>
+								</a>
+							</li>
 
-    {% block body_tail %} {% endblock %}
+                            <li class="nav-item">
+								<a class="nav-link {{ is_active_path('admin/api') }}" href="{{ path_for('admin.index') }}">
+									<i class="far fa-fw fa-list"></i>
+									<p>Api</p>
+								</a>
+							</li>
 
-</body>
-</html>
+						</ul>
+
+
+					</nav>
+				</div>
+
+			</aside>
+
+			{% include "layouts/_control_sidebar.twig" %}
+
+			<div class="content-wrapper">
+
+				<section class="content-header">
+					<h1>
+						{% block body_content_header %}{% endblock %}
+					</h1>
+				</section>
+
+				<section class="content">
+					<div class="container-fluid"> {% block body_content %}{% endblock %}
+						</div>
+					</section>
+				</div>
+
+				<footer class="main-footer d-print-none">
+					Copyright &copy; 2017-{{ now | date('Y') }}
+					Lex Tomi
+				</footer>
+
+			</div>
+
+
+			<div class="fade modal" data-keyboard="false" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title float-left"></h4>
+							<a class="close">
+								<i class="fa-fw far fa-times"></i>
+							</a>
+						</div>
+						<div class="modal-body">
+							<div class='loader'>
+								<i class='fa fa-spin fa-spinner'></i>
+							</div>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- ALFI DEFAUTLS -->
+
+			<script>
+				$.widget.bridge('uibutton', $.ui.button)
+			</script>
+
+			{% block body_tail %}{% endblock %}
+
+		</body>
+	</html>

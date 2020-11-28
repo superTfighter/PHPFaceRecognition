@@ -1,0 +1,134 @@
+{% extends 'app.twig' %}
+
+{% block script_include %}{% endblock %}
+
+{% block body_content %}
+
+	<div class="row">
+
+		<div class="col-12">
+
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Adatbázis változók</h3>
+					<button type="button" class="btn btn-refresh float-right">
+						<i class="fas fa-sync-alt"></i>
+					</button>
+				</div>
+				<!-- /.card-header -->
+				<div class="card-body">
+
+                <table id="database-table" class="table table-hover table-striped table-bordered table-condensed table-actions table-responsive" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>Név</th>
+								<th></th>
+							</tr>
+						</thead>
+					</table>
+
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card-->
+
+
+		</div>
+
+
+	</div>
+
+
+{% endblock %}
+
+
+{% block body_tail %}
+
+<script>
+
+$('#database-table').DataTable({
+    processing: true,
+    serverSide: false,
+    stateSave: false,
+    lengthMenu: [
+        [
+            15, 25, 50, 100
+        ],
+        [
+            15, 25, 50, 100
+        ]
+    ],
+    iDisplayLength: 15,
+    ajax: {
+        url: "{{ path_for('admin.tables.json') }}",
+        data: {
+            route_type: "GROUP",
+            embed: "user"
+        }
+    },
+    columns: [
+
+        {
+            data: "name"
+        },
+        {
+            data: null,
+            render: function (data) {
+                deleteButton = '<button class="btn btn-xs btn-danger btn-delete-database" data-name="' + data.name + '"><i class="fa fa-trash" > Törlés </button>';
+
+                return deleteButton;
+            }
+
+        }
+
+    ],
+    "fnDrawCallback": function () {
+
+
+        $('.btn-delete-database').on('click', function () {
+
+            var name = $(this).attr('data-name');
+
+            var url = "{{ path_for('admin.database.delete.ajax',{'name' : 'nameg' }) }}";
+            url = url.replace('nameg', name);
+
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+            }).done(function (data) {
+
+                if (data.status == 'success') {
+                    toastr.success('Sikeres törlés');
+                    $('#user-table').DataTable().ajax.reload();
+
+                } else {
+                    toastr.error(data.message);
+
+                }
+            }).fail(function (data) {
+                toastr.error('Valami nemmo' + data);
+
+            })
+
+        });
+
+
+
+        
+
+
+
+    },
+    language: {
+        url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Hungarian.json"
+    }
+
+});
+
+
+
+</script>
+
+
+
+{% endblock %}
